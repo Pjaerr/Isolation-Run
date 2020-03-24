@@ -25,10 +25,12 @@ You should now be able to see the site at `http://localhost:3000`. That won't be
 
 This project isn't finished yet, but is almost there. The following are tasks that I've got to finish before publishing. Any tasks beyond these will be added as github issues.
 
-[] Add a "how-to" modal to the homescreen to explain how the site works
+[ ] Add a "how-to" modal to the homescreen to explain how the site works
 
-[] Improve the code in `frontend/src/Phone.svelte` that determines if a user is actually running
+[ ] Improve the code in `frontend/src/Phone.svelte` that determines if a user is actually running
 
-[] Implement dynamic video speed depending upon how fast the user is running (if possible)
+[ ] Implement dynamic video speed depending upon how fast the user is running (if possible)
 
-[] Look into sending WebSocket messages to only a specific client (to avoid potential 100s of messages being sent if lots of users are using the site at one time)
+[ ] Look into sending WebSocket messages to only a specific client (to avoid potential 100s of messages being sent if lots of users are using the site at one time)
+
+[ ] Improve the UX of the video selection page/component
