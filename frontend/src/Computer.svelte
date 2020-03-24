@@ -1,0 +1,102 @@
+<script>
+  import { v4 as uuidv4 } from "uuid";
+  import { isPaused } from "./stores.js";
+
+  import Video from "./Video.svelte";
+
+  let id = uuidv4();
+
+  const connectionCode = uuidv4().substring(0, 8);
+
+  let phoneWebSocketID = "";
+  let phoneHasConnected = false;
+
+  const socket = new WebSocket("wss://" + location.host);
+
+  socket.onopen = e => {
+    socket.send(
+      JSON.stringify({
+        id,
+        connectionCode,
+        messageType: "connection"
+      })
+    );
+
+    socket.onerror = e => {
+      console.error(e);
+    };
+
+    socket.onmessage = e => {
+      const data = JSON.parse(e.data);
+
+      if (data.messageType === "connection") {
+        if (data.connectionCode === connectionCode) {
+          phoneHasConnected = true;
+          phoneWebSocketID = data.id;
+
+          socket.send(
+            JSON.stringify({
+              id,
+              connectionCode: connectionCode,
+              messageType: "connection"
+            })
+          );
+        }
+      } else if (
+        data.messageType === "connectionclosed" &&
+        data.id === phoneWebSocketID
+      ) {
+        phoneHasConnected = false;
+        phoneWebSocketID = "";
+        socket.send(
+          JSON.stringify({
+            id,
+            messageType: "connectionclosed"
+          })
+        );
+        socket.close();
+        location.reload();
+      } else if (
+        data.messageType === "playvideo" &&
+        data.id === phoneWebSocketID
+      ) {
+        isPaused.set(false);
+        console.log($isPaused);
+      } else if (
+        data.messageType === "pausevideo" &&
+        data.id === phoneWebSocketID
+      ) {
+        isPaused.set(true);
+        console.log($isPaused);
+      }
+    };
+
+    window.onbeforeunload = () => {
+      socket.send(
+        JSON.stringify({
+          id,
+          messageType: "connectionclosed"
+        })
+      );
+      socket.close();
+    };
+  };
+</script>
+
+<style>
+  h1 {
+    text-align: center;
+  }
+
+  .code {
+    color: #333;
+    font-size: 3em;
+  }
+</style>
+
+{#if phoneHasConnected}
+  <Video youtubeVideoID="oSmUI3m2kLk" />
+{:else}
+  <h1>Enter the following code on your phone to connect:</h1>
+  <h1 class="code">{connectionCode}</h1>
+{/if}
