@@ -111,6 +111,10 @@
   }
 </style>
 
+{#if !phoneHasConnected}
+  <a href="/">Go back</a>
+{/if}
+
 {#if hasChosenVideo}
   {#if phoneHasConnected}
     <Video youtubeVideoID={selectedVideo} />

@@ -124,6 +124,10 @@
   }
 </style>
 
+{#if !desktopHasConnected}
+  <a href="/">Go back</a>
+{/if}
+
 {#if !socketIsOpen || !desktopHasConnected}
   <h1>
     Visit this website on your desktop to find the code you need to enter here:

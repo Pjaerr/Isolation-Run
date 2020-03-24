@@ -1070,7 +1070,37 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$2 = "src\\Computer.svelte";
 
-    // (121:0) {:else}
+    // (114:0) {#if !phoneHasConnected}
+    function create_if_block_2(ctx) {
+    	let a;
+
+    	const block = {
+    		c: function create() {
+    			a = element("a");
+    			a.textContent = "Go back";
+    			attr_dev(a, "href", "/");
+    			add_location(a, file$2, 114, 2, 2478);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, a, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(a);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2.name,
+    		type: "if",
+    		source: "(114:0) {#if !phoneHasConnected}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (125:0) {:else}
     function create_else_block_1(ctx) {
     	let h1;
     	let t1;
@@ -1107,9 +1137,9 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Choose Video";
     			attr_dev(h1, "class", "svelte-1wg9sjd");
-    			add_location(h1, file$2, 121, 2, 2685);
+    			add_location(h1, file$2, 125, 2, 2747);
     			attr_dev(button, "class", "svelte-1wg9sjd");
-    			add_location(button, file$2, 123, 2, 2786);
+    			add_location(button, file$2, 127, 2, 2848);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, h1, anchor);
@@ -1155,14 +1185,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(121:0) {:else}",
+    		source: "(125:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (114:0) {#if hasChosenVideo}
+    // (118:0) {#if hasChosenVideo}
     function create_if_block$1(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -1233,14 +1263,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(114:0) {#if hasChosenVideo}",
+    		source: "(118:0) {#if hasChosenVideo}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (117:2) {:else}
+    // (121:2) {:else}
     function create_else_block$1(ctx) {
     	let h10;
     	let t1;
@@ -1254,9 +1284,9 @@ var app = (function () {
     			h11 = element("h1");
     			h11.textContent = `${/*connectionCode*/ ctx[3]}`;
     			attr_dev(h10, "class", "svelte-1wg9sjd");
-    			add_location(h10, file$2, 117, 4, 2560);
+    			add_location(h10, file$2, 121, 4, 2622);
     			attr_dev(h11, "class", "code svelte-1wg9sjd");
-    			add_location(h11, file$2, 118, 4, 2625);
+    			add_location(h11, file$2, 122, 4, 2687);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h10, anchor);
@@ -1277,14 +1307,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(117:2) {:else}",
+    		source: "(121:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (115:2) {#if phoneHasConnected}
+    // (119:2) {#if phoneHasConnected}
     function create_if_block_1(ctx) {
     	let current;
 
@@ -1324,7 +1354,7 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(115:2) {#if phoneHasConnected}",
+    		source: "(119:2) {#if phoneHasConnected}",
     		ctx
     	});
 
@@ -1332,10 +1362,12 @@ var app = (function () {
     }
 
     function create_fragment$2(ctx) {
+    	let t;
     	let current_block_type_index;
-    	let if_block;
-    	let if_block_anchor;
+    	let if_block1;
+    	let if_block1_anchor;
     	let current;
+    	let if_block0 = !/*phoneHasConnected*/ ctx[2] && create_if_block_2(ctx);
     	const if_block_creators = [create_if_block$1, create_else_block_1];
     	const if_blocks = [];
 
@@ -1345,22 +1377,37 @@ var app = (function () {
     	}
 
     	current_block_type_index = select_block_type(ctx);
-    	if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+    	if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
 
     	const block = {
     		c: function create() {
-    			if_block.c();
-    			if_block_anchor = empty();
+    			if (if_block0) if_block0.c();
+    			t = space();
+    			if_block1.c();
+    			if_block1_anchor = empty();
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
+    			if (if_block0) if_block0.m(target, anchor);
+    			insert_dev(target, t, anchor);
     			if_blocks[current_block_type_index].m(target, anchor);
-    			insert_dev(target, if_block_anchor, anchor);
+    			insert_dev(target, if_block1_anchor, anchor);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
+    			if (!/*phoneHasConnected*/ ctx[2]) {
+    				if (!if_block0) {
+    					if_block0 = create_if_block_2(ctx);
+    					if_block0.c();
+    					if_block0.m(t.parentNode, t);
+    				}
+    			} else if (if_block0) {
+    				if_block0.d(1);
+    				if_block0 = null;
+    			}
+
     			let previous_block_index = current_block_type_index;
     			current_block_type_index = select_block_type(ctx);
 
@@ -1374,29 +1421,31 @@ var app = (function () {
     				});
 
     				check_outros();
-    				if_block = if_blocks[current_block_type_index];
+    				if_block1 = if_blocks[current_block_type_index];
 
-    				if (!if_block) {
-    					if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-    					if_block.c();
+    				if (!if_block1) {
+    					if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+    					if_block1.c();
     				}
 
-    				transition_in(if_block, 1);
-    				if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				transition_in(if_block1, 1);
+    				if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
     			}
     		},
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(if_block);
+    			transition_in(if_block1);
     			current = true;
     		},
     		o: function outro(local) {
-    			transition_out(if_block);
+    			transition_out(if_block1);
     			current = false;
     		},
     		d: function destroy(detaching) {
+    			if (if_block0) if_block0.d(detaching);
+    			if (detaching) detach_dev(t);
     			if_blocks[current_block_type_index].d(detaching);
-    			if (detaching) detach_dev(if_block_anchor);
+    			if (detaching) detach_dev(if_block1_anchor);
     		}
     	};
 
@@ -1570,7 +1619,37 @@ var app = (function () {
     /* src\Phone.svelte generated by Svelte v3.20.1 */
     const file$3 = "src\\Phone.svelte";
 
-    // (140:0) {:else}
+    // (127:0) {#if !desktopHasConnected}
+    function create_if_block_1$1(ctx) {
+    	let a;
+
+    	const block = {
+    		c: function create() {
+    			a = element("a");
+    			a.textContent = "Go back";
+    			attr_dev(a, "href", "/");
+    			add_location(a, file$3, 127, 2, 2752);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, a, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(a);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1$1.name,
+    		type: "if",
+    		source: "(127:0) {#if !desktopHasConnected}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (144:0) {:else}
     function create_else_block$2(ctx) {
     	let h1;
     	let t1;
@@ -1584,10 +1663,10 @@ var app = (function () {
     			t1 = space();
     			img = element("img");
     			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$3, 140, 2, 3065);
+    			add_location(h1, file$3, 144, 2, 3129);
     			if (img.src !== (img_src_value = /*gif*/ ctx[3])) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Gif of somebody running");
-    			add_location(img, file$3, 141, 2, 3116);
+    			add_location(img, file$3, 145, 2, 3180);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
@@ -1606,14 +1685,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(140:0) {:else}",
+    		source: "(144:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (127:0) {#if !socketIsOpen || !desktopHasConnected}
+    // (131:0) {#if !socketIsOpen || !desktopHasConnected}
     function create_if_block$2(ctx) {
     	let h1;
     	let t1;
@@ -1632,15 +1711,15 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Connect";
     			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$3, 127, 2, 2769);
+    			add_location(h1, file$3, 131, 2, 2833);
     			attr_dev(input, "type", "text");
     			attr_dev(input, "name", "connectionCode");
     			attr_dev(input, "autocapitalize", "off");
     			input.autofocus = true;
     			attr_dev(input, "class", "svelte-imh9mg");
-    			add_location(input, file$3, 131, 2, 2869);
+    			add_location(input, file$3, 135, 2, 2933);
     			attr_dev(button, "class", "svelte-imh9mg");
-    			add_location(button, file$3, 138, 2, 3002);
+    			add_location(button, file$3, 142, 2, 3066);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, h1, anchor);
@@ -1676,7 +1755,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(127:0) {#if !socketIsOpen || !desktopHasConnected}",
+    		source: "(131:0) {#if !socketIsOpen || !desktopHasConnected}",
     		ctx
     	});
 
@@ -1684,7 +1763,9 @@ var app = (function () {
     }
 
     function create_fragment$3(ctx) {
-    	let if_block_anchor;
+    	let t;
+    	let if_block1_anchor;
+    	let if_block0 = !/*desktopHasConnected*/ ctx[1] && create_if_block_1$1(ctx);
 
     	function select_block_type(ctx, dirty) {
     		if (!/*socketIsOpen*/ ctx[2] || !/*desktopHasConnected*/ ctx[1]) return create_if_block$2;
@@ -1692,38 +1773,55 @@ var app = (function () {
     	}
 
     	let current_block_type = select_block_type(ctx);
-    	let if_block = current_block_type(ctx);
+    	let if_block1 = current_block_type(ctx);
 
     	const block = {
     		c: function create() {
-    			if_block.c();
-    			if_block_anchor = empty();
+    			if (if_block0) if_block0.c();
+    			t = space();
+    			if_block1.c();
+    			if_block1_anchor = empty();
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			if_block.m(target, anchor);
-    			insert_dev(target, if_block_anchor, anchor);
+    			if (if_block0) if_block0.m(target, anchor);
+    			insert_dev(target, t, anchor);
+    			if_block1.m(target, anchor);
+    			insert_dev(target, if_block1_anchor, anchor);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-    				if_block.p(ctx, dirty);
-    			} else {
-    				if_block.d(1);
-    				if_block = current_block_type(ctx);
+    			if (!/*desktopHasConnected*/ ctx[1]) {
+    				if (!if_block0) {
+    					if_block0 = create_if_block_1$1(ctx);
+    					if_block0.c();
+    					if_block0.m(t.parentNode, t);
+    				}
+    			} else if (if_block0) {
+    				if_block0.d(1);
+    				if_block0 = null;
+    			}
 
-    				if (if_block) {
-    					if_block.c();
-    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block1) {
+    				if_block1.p(ctx, dirty);
+    			} else {
+    				if_block1.d(1);
+    				if_block1 = current_block_type(ctx);
+
+    				if (if_block1) {
+    					if_block1.c();
+    					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
     				}
     			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if_block.d(detaching);
-    			if (detaching) detach_dev(if_block_anchor);
+    			if (if_block0) if_block0.d(detaching);
+    			if (detaching) detach_dev(t);
+    			if_block1.d(detaching);
+    			if (detaching) detach_dev(if_block1_anchor);
     		}
     	};
 
@@ -2007,7 +2105,7 @@ var app = (function () {
     }
 
     // (40:29) 
-    function create_if_block_1$1(ctx) {
+    function create_if_block_1$2(ctx) {
     	let current;
     	const phone = new Phone({ $$inline: true });
 
@@ -2036,7 +2134,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_1$1.name,
+    		id: create_if_block_1$2.name,
     		type: "if",
     		source: "(40:29) ",
     		ctx
@@ -2089,7 +2187,7 @@ var app = (function () {
     	let current_block_type_index;
     	let if_block;
     	let current;
-    	const if_block_creators = [create_if_block$3, create_if_block_1$1, create_else_block$3];
+    	const if_block_creators = [create_if_block$3, create_if_block_1$2, create_else_block$3];
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
