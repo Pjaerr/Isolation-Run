@@ -4,6 +4,7 @@
   "description": "A silly website that helps you keep up your running habit whilst in lockdown/quarantine made using Svelte, Node and WebSockets.",
   "main": "index.js",
   "scripts": {
+    "start": "cd backend && node main",
     "build": "cd frontend && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
