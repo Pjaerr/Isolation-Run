@@ -1,7 +1,11 @@
 <script>
+  import InfoModal from "./InfoModal.svelte";
   import Computer from "./Computer.svelte";
   import Phone from "./Phone.svelte";
+
   let mode;
+
+  let howToIsActive = false;
 </script>
 
 <style>
@@ -14,6 +18,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
   }
 
   em {
@@ -32,6 +37,12 @@
   button > svg {
     margin-right: 5px;
   }
+
+  .how-to-button {
+    font-size: 1em;
+    margin: 40px;
+    width: 11em;
+  }
 </style>
 
 <main>
@@ -45,6 +56,14 @@
       <em>run</em>
       tine. You'll need a phone and a computer to get started!
     </h1>
+
+    <button class="how-to-button" on:click={() => (howToIsActive = true)}>
+      How does this work?
+    </button>
+
+    {#if howToIsActive}
+      <InfoModal onClose={() => (howToIsActive = false)} />
+    {/if}
 
     <h2>Which device is this?</h2>
 
