@@ -25,7 +25,7 @@ You should now be able to see the site at `http://localhost:3000`. That won't be
 
 This project isn't finished yet, but is almost there. The following are tasks that I've got to finish before publishing. Any tasks beyond these will be added as github issues.
 
-[ ] Add a "how-to" modal to the homescreen to explain how the site works
+[X] Add a "how-to" modal to the homescreen to explain how the site works
 
 [ ] Improve the code in `frontend/src/Phone.svelte` that determines if a user is actually running
 
