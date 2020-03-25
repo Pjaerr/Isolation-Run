@@ -32,6 +32,15 @@
       console.error(e);
     };
 
+    socket.onclose = e => {
+      socket.send(
+        JSON.stringify({
+          partnerID: phoneWebSocketID,
+          messageType: "connectionclosed"
+        })
+      );
+    };
+
     socket.onmessage = e => {
       const data = JSON.parse(e.data);
 

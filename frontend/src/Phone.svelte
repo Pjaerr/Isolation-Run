@@ -22,6 +22,15 @@
       );
     };
 
+    socket.onclose = e => {
+      socket.send(
+        JSON.stringify({
+          partnerID: desktopWebSocketID,
+          messageType: "connectionclosed"
+        })
+      );
+    };
+
     socket.onmessage = e => {
       const data = JSON.parse(e.data);
 
