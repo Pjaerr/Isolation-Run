@@ -4,11 +4,26 @@
   "description": "A silly website that helps you keep up your running habit whilst in lockdown/quarantine made using Svelte, Node and WebSockets.",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install && node main",
+    "build": "cd frontend && npm run build && cd ../backend && node main",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
     "node": "12.16.x"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "rollup": "^1.20.0",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^5.1.2",
+    "svelte": "^3.0.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "sirv-cli": "^0.4.4",
+    "uuid": "^7.0.2",
+    "ws": "^7.2.3"
   },
   "repository": {
     "type": "git",
