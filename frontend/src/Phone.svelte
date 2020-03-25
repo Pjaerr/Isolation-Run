@@ -1,10 +1,8 @@
 <script>
-  import { v4 as uuidv4 } from "uuid";
   import gifs from "./gifs.js";
 
   const gif = gifs[Math.floor(Math.random() * (gifs.length - 1 + 1))];
 
-  let id = uuidv4();
   let connectionCode = "";
   let desktopHasConnected = false;
   let desktopWebSocketID = "";
@@ -18,7 +16,6 @@
       socketIsOpen = true;
       socket.send(
         JSON.stringify({
-          id,
           connectionCode: connectionCode,
           messageType: "connection"
         })
@@ -28,22 +25,18 @@
     socket.onmessage = e => {
       const data = JSON.parse(e.data);
 
-      if (
-        data.messageType === "connection" &&
-        data.connectionCode === connectionCode
-      ) {
+      console.log("Received a message");
+
+      if (data.messageType === "connection") {
         desktopHasConnected = true;
         desktopWebSocketID = data.id;
-      } else if (
-        data.messageType === "connectionclosed" &&
-        data.id === desktopWebSocketID
-      ) {
+      } else if (data.messageType === "connectionclosed") {
         desktopWebSocketID = "";
         desktopHasConnected = false;
 
         socket.send(
           JSON.stringify({
-            id,
+            partnerID: desktopWebSocketID,
             messageType: "connectionclosed"
           })
         );
@@ -57,7 +50,7 @@
     window.onbeforeunload = () => {
       socket.send(
         JSON.stringify({
-          id,
+          partnerID: desktopWebSocketID,
           messageType: "connectionclosed"
         })
       );
@@ -85,14 +78,14 @@
     if (isRunning && !wasRunningPreviously) {
       socket.send(
         JSON.stringify({
-          id,
+          partnerID: desktopWebSocketID,
           messageType: "playvideo"
         })
       );
     } else if (!isRunning && wasRunningPreviously) {
       socket.send(
         JSON.stringify({
-          id,
+          partnerID: desktopWebSocketID,
           messageType: "pausevideo"
         })
       );

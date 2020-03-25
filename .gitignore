@@ -105,3 +105,6 @@ dist
 
 frontend/node_modules
 backend/node_modules
+frontend/public/build/bundle.css.map
+frontend/public/build/bundle.js
+frontend/public/build/bundle.js.map

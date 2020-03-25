@@ -1,3 +1,4 @@
+const uuidv4 = require("uuid/v4");
 const path = require("path");
 const WebSocket = require("ws");
 const express = require("express");
@@ -13,27 +14,57 @@ let connections = [];
 
 WebSocketServer.on("connection", ws => {
   //Store websocket and then in the below code, send a message to all web sockets
-  console.log("Somebody has connected!");
-  connections.push(ws);
+  console.log("New Connection!");
+
+  connections.push({
+    ws,
+    id: uuidv4()
+  });
 
   ws.on("message", msg => {
-    const message = JSON.parse(msg);
+    //Get this websocket from the connections array
+    client = connections.filter(connection => {
+      return connection.ws === ws;
+    })[0];
 
+    let message = JSON.parse(msg);
+
+    //Store the ID of this websocket along with the message
+    message.id = client.id;
+
+    //If this websocket has been closed, remove it from our array of connections (this message will still be sent to the relevant partner client so it can also close its connection)
     if (message.messageType === "connectionclosed") {
-      //Remove it from the connections
       connections = connections.filter(connection => {
-        return connection !== ws;
+        return connection.id !== client.id;
       });
 
       console.log("Remaining Connections: " + connections.length);
     }
 
-    //Forward this message to all other connections
-    connections.forEach(connection => {
-      if (connection !== ws) {
-        connection.send(msg);
-      }
-    });
+    //If this is the first time a device has connected, we need to loop through the existing clients
+    //and check if any of them have the same connection code so we can send the initial connection message.
+    if (message.messageType === "connection") {
+      connections[connections.indexOf(client)].connectionCode =
+        message.connectionCode;
+
+      connections.forEach(connection => {
+        if (connection !== client) {
+          if (
+            connection.connectionCode &&
+            connection.connectionCode === message.connectionCode
+          ) {
+            connection.ws.send(JSON.stringify(message));
+          }
+        }
+      });
+    } else {
+      //Forward this message to this client's partner whose connection we have already established.
+      connections.forEach(connection => {
+        if (connection.id === message.partnerID) {
+          connection.ws.send(JSON.stringify(message));
+        }
+      });
+    }
   });
 });
 

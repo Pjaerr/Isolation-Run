@@ -31,6 +31,6 @@ This project isn't finished yet, but is almost there. The following are tasks th
 
 [ ] Implement dynamic video speed depending upon how fast the user is running (if possible)
 
-[ ] Look into sending WebSocket messages to only a specific client (to avoid potential 100s of messages being sent if lots of users are using the site at one time)
+[X] Look into sending WebSocket messages to only a specific client (to avoid potential 100s of messages being sent if lots of users are using the site at one time) -- This now works but could probably be written much better. Will come back to it after the project is live.
 
 [ ] Improve the UX of the video selection page/component

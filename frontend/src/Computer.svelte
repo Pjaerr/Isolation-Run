@@ -5,9 +5,6 @@
   import VideoSelection from "./VideoSelection.svelte";
   import Video from "./Video.svelte";
 
-  //The ID of this client's WebSocket
-  let id = uuidv4();
-
   let hasChosenVideo = false;
   let selectedVideo;
 
@@ -25,7 +22,6 @@
     socket.onopen = e => {
       socket.send(
         JSON.stringify({
-          id,
           connectionCode,
           messageType: "connection"
         })
@@ -39,43 +35,33 @@
     socket.onmessage = e => {
       const data = JSON.parse(e.data);
 
-      if (data.messageType === "connection") {
-        if (data.connectionCode === connectionCode) {
-          phoneHasConnected = true;
-          phoneWebSocketID = data.id;
+      console.log("Received a message");
 
-          socket.send(
-            JSON.stringify({
-              id,
-              connectionCode: connectionCode,
-              messageType: "connection"
-            })
-          );
-        }
-      } else if (
-        data.messageType === "connectionclosed" &&
-        data.id === phoneWebSocketID
-      ) {
+      if (data.messageType === "connection") {
+        phoneHasConnected = true;
+        phoneWebSocketID = data.id;
+
+        socket.send(
+          JSON.stringify({
+            connectionCode: connectionCode,
+            messageType: "connection"
+          })
+        );
+      } else if (data.messageType === "connectionclosed") {
         phoneHasConnected = false;
         phoneWebSocketID = "";
         socket.send(
           JSON.stringify({
-            id,
+            partnerID: phoneWebSocketID,
             messageType: "connectionclosed"
           })
         );
         socket.close();
         location.reload();
-      } else if (
-        data.messageType === "playvideo" &&
-        data.id === phoneWebSocketID
-      ) {
+      } else if (data.messageType === "playvideo") {
         isPaused.set(false);
         console.log($isPaused);
-      } else if (
-        data.messageType === "pausevideo" &&
-        data.id === phoneWebSocketID
-      ) {
+      } else if (data.messageType === "pausevideo") {
         isPaused.set(true);
         console.log($isPaused);
       }
@@ -84,7 +70,7 @@
     window.onbeforeunload = () => {
       socket.send(
         JSON.stringify({
-          id,
+          partnerID: phoneWebSocketID,
           messageType: "connectionclosed"
         })
       );
