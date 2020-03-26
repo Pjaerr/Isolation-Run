@@ -49,7 +49,11 @@ WebSocketServer.on("connection", ws => {
         return connection.id === message.partnerID;
       })[0];
 
-      partnerConnection.ws.close();
+      //If our partner has already closed their connection.
+      if (partnerConnection) {
+        partnerConnection.ws.close();
+      }
+
       ws.close();
 
       //We don't need to send this message to the other client as we just closed it
