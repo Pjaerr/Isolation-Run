@@ -17,13 +17,15 @@
 
   </script>
   <script>
-    window.onYouTubeIframeAPIReady = () => {
+    window.onYouTubeIframeAPIReady = function() {
       window.YOUTUBE_PLAYER = new YT.Player("youtube_player_iframe", {
         events: {
-          onReady: () => {
+          onReady: function() {
             window.YOUTUBE_PLAYER_ISREADY = true;
 
-            setTimeout(() => window.YOUTUBE_PLAYER.pauseVideo(), 1000);
+            setTimeout(function() {
+              window.YOUTUBE_PLAYER.pauseVideo();
+            }, 1000);
           }
         }
       });

@@ -12,6 +12,14 @@ const WebSocketServer = new WebSocket.Server({ server });
 
 let connections = [];
 
+WebSocketServer.on("close", ws => {
+  connections = connections.filter(connection => {
+    return connection.ws !== ws;
+  });
+
+  console.log("Remaining Connections: " + connections.length);
+});
+
 WebSocketServer.on("connection", ws => {
   //Store websocket and then in the below code, send a message to all web sockets
   console.log("New Connection!");
@@ -37,8 +45,6 @@ WebSocketServer.on("connection", ws => {
       connections = connections.filter(connection => {
         return connection.id !== client.id;
       });
-
-      console.log("Remaining Connections: " + connections.length);
     }
 
     //If this is the first time a device has connected, we need to loop through the existing clients
