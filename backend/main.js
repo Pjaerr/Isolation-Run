@@ -1,4 +1,4 @@
-const uuidv4 = require("uuid/v4");
+const uuidv4 = require("uuid").v4;
 const path = require("path");
 const WebSocket = require("ws");
 const express = require("express");
@@ -12,39 +12,48 @@ const WebSocketServer = new WebSocket.Server({ server });
 
 let connections = [];
 
-WebSocketServer.on("close", ws => {
-  connections = connections.filter(connection => {
-    return connection.ws !== ws;
-  });
-
-  console.log("Remaining Connections: " + connections.length);
-});
-
 WebSocketServer.on("connection", ws => {
-  //Store websocket and then in the below code, send a message to all web sockets
-  console.log("New Connection!");
+  //Store the new connection alongside a generated GUID.
+  console.log("New Connection");
 
   connections.push({
     ws,
     id: uuidv4()
   });
 
+  //When this websocket closes, remove it from the connections array
+  ws.on("close", () => {
+    connections = connections.filter(connection => {
+      return connection.ws !== ws;
+    });
+
+    console.log(
+      "Connection Closed | Remaining Connections: " + connections.length
+    );
+  });
+
   ws.on("message", msg => {
-    //Get this websocket from the connections array
+    let message = JSON.parse(msg);
+
+    //Get this websocket from the connections array so we can reference its ID
     client = connections.filter(connection => {
       return connection.ws === ws;
     })[0];
-
-    let message = JSON.parse(msg);
 
     //Store the ID of this websocket along with the message
     message.id = client.id;
 
     //If this websocket has been closed, remove it from our array of connections (this message will still be sent to the relevant partner client so it can also close its connection)
     if (message.messageType === "connectionclosed") {
-      connections = connections.filter(connection => {
-        return connection.id !== client.id;
-      });
+      partnerConnection = connections.filter(connection => {
+        return connection.id === message.partnerID;
+      })[0];
+
+      partnerConnection.ws.close();
+      ws.close();
+
+      //We don't need to send this message to the other client as we just closed it
+      return;
     }
 
     //If this is the first time a device has connected, we need to loop through the existing clients

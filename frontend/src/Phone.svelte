@@ -23,12 +23,7 @@
     };
 
     socket.onclose = e => {
-      socket.send(
-        JSON.stringify({
-          partnerID: desktopWebSocketID,
-          messageType: "connectionclosed"
-        })
-      );
+      location.reload();
     };
 
     socket.onmessage = e => {
@@ -39,20 +34,6 @@
       if (data.messageType === "connection") {
         desktopHasConnected = true;
         desktopWebSocketID = data.id;
-      } else if (data.messageType === "connectionclosed") {
-        desktopWebSocketID = "";
-        desktopHasConnected = false;
-
-        socket.send(
-          JSON.stringify({
-            partnerID: desktopWebSocketID,
-            messageType: "connectionclosed"
-          })
-        );
-
-        socket.close();
-        window.removeEventListener("devicemotion", handleDeviceMotion);
-        location.reload();
       }
     };
 
@@ -65,8 +46,6 @@
       );
 
       window.removeEventListener("devicemotion", handleDeviceMotion);
-
-      socket.close();
     };
   }
 
@@ -135,6 +114,7 @@
     Visit this website on your desktop to find the code you need to enter here:
   </h1>
 
+  <!-- svelte-ignore a11y-autofocus -->
   <input
     type="text"
     name="connectionCode"
@@ -144,6 +124,6 @@
 
   <button on:click={openConnection}>Connect</button>
 {:else}
-  <h1>Keep your phone screen unlocked! 🏃‍♀️</h1>
+  <h1>Keep your phone screen unlocked and start running! 🏃‍♀️</h1>
   <img src={gif} alt="Gif of somebody running" />
 {/if}

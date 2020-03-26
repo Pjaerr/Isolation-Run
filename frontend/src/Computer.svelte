@@ -28,17 +28,8 @@
       );
     };
 
-    socket.onerror = e => {
-      console.error(e);
-    };
-
     socket.onclose = e => {
-      socket.send(
-        JSON.stringify({
-          partnerID: phoneWebSocketID,
-          messageType: "connectionclosed"
-        })
-      );
+      location.reload();
     };
 
     socket.onmessage = e => {
@@ -56,17 +47,6 @@
             messageType: "connection"
           })
         );
-      } else if (data.messageType === "connectionclosed") {
-        phoneHasConnected = false;
-        phoneWebSocketID = "";
-        socket.send(
-          JSON.stringify({
-            partnerID: phoneWebSocketID,
-            messageType: "connectionclosed"
-          })
-        );
-        socket.close();
-        location.reload();
       } else if (data.messageType === "playvideo") {
         isPaused.set(false);
         console.log($isPaused);
@@ -83,7 +63,6 @@
           messageType: "connectionclosed"
         })
       );
-      socket.close();
     };
   }
 </script>
