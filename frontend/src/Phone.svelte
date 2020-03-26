@@ -14,12 +14,15 @@
     socket = new WebSocket("wss://" + location.host);
     socket.onopen = e => {
       socketIsOpen = true;
-      socket.send(
-        JSON.stringify({
-          connectionCode: connectionCode,
-          messageType: "connection"
-        })
-      );
+
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            connectionCode: connectionCode,
+            messageType: "connection"
+          })
+        );
+      }
     };
 
     socket.onclose = e => {
@@ -38,12 +41,14 @@
     };
 
     window.onbeforeunload = () => {
-      socket.send(
-        JSON.stringify({
-          partnerID: desktopWebSocketID,
-          messageType: "connectionclosed"
-        })
-      );
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            partnerID: desktopWebSocketID,
+            messageType: "connectionclosed"
+          })
+        );
+      }
 
       window.removeEventListener("devicemotion", handleDeviceMotion);
     };
@@ -64,19 +69,23 @@
     }
 
     if (isRunning && !wasRunningPreviously) {
-      socket.send(
-        JSON.stringify({
-          partnerID: desktopWebSocketID,
-          messageType: "playvideo"
-        })
-      );
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            partnerID: desktopWebSocketID,
+            messageType: "playvideo"
+          })
+        );
+      }
     } else if (!isRunning && wasRunningPreviously) {
-      socket.send(
-        JSON.stringify({
-          partnerID: desktopWebSocketID,
-          messageType: "pausevideo"
-        })
-      );
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            partnerID: desktopWebSocketID,
+            messageType: "pausevideo"
+          })
+        );
+      }
     }
 
     wasRunningPreviously = isRunning;

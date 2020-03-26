@@ -1641,7 +1641,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$3 = "src\\Computer.svelte";
 
-    // (88:0) {#if !phoneHasConnected}
+    // (94:0) {#if !phoneHasConnected}
     function create_if_block_2(ctx) {
     	let a;
 
@@ -1650,7 +1650,7 @@ var app = (function () {
     			a = element("a");
     			a.textContent = "Go back";
     			attr_dev(a, "href", "/");
-    			add_location(a, file$3, 88, 2, 1849);
+    			add_location(a, file$3, 94, 2, 2069);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
@@ -1664,14 +1664,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(88:0) {#if !phoneHasConnected}",
+    		source: "(94:0) {#if !phoneHasConnected}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (99:0) {:else}
+    // (105:0) {:else}
     function create_else_block_1(ctx) {
     	let h1;
     	let t1;
@@ -1708,9 +1708,9 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Choose Video";
     			attr_dev(h1, "class", "svelte-1wg9sjd");
-    			add_location(h1, file$3, 99, 2, 2118);
+    			add_location(h1, file$3, 105, 2, 2338);
     			attr_dev(button, "class", "svelte-1wg9sjd");
-    			add_location(button, file$3, 101, 2, 2219);
+    			add_location(button, file$3, 107, 2, 2439);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, h1, anchor);
@@ -1756,14 +1756,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(99:0) {:else}",
+    		source: "(105:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (92:0) {#if hasChosenVideo}
+    // (98:0) {#if hasChosenVideo}
     function create_if_block$1(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -1834,14 +1834,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(92:0) {#if hasChosenVideo}",
+    		source: "(98:0) {#if hasChosenVideo}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (95:2) {:else}
+    // (101:2) {:else}
     function create_else_block$1(ctx) {
     	let h10;
     	let t1;
@@ -1855,9 +1855,9 @@ var app = (function () {
     			h11 = element("h1");
     			h11.textContent = `${/*connectionCode*/ ctx[3]}`;
     			attr_dev(h10, "class", "svelte-1wg9sjd");
-    			add_location(h10, file$3, 95, 4, 1993);
+    			add_location(h10, file$3, 101, 4, 2213);
     			attr_dev(h11, "class", "code svelte-1wg9sjd");
-    			add_location(h11, file$3, 96, 4, 2058);
+    			add_location(h11, file$3, 102, 4, 2278);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h10, anchor);
@@ -1878,14 +1878,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(95:2) {:else}",
+    		source: "(101:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (93:2) {#if phoneHasConnected}
+    // (99:2) {#if phoneHasConnected}
     function create_if_block_1(ctx) {
     	let current;
 
@@ -1925,7 +1925,7 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(93:2) {#if phoneHasConnected}",
+    		source: "(99:2) {#if phoneHasConnected}",
     		ctx
     	});
 
@@ -2047,10 +2047,12 @@ var app = (function () {
     		socket = new WebSocket("wss://" + location.host);
 
     		socket.onopen = e => {
-    			socket.send(JSON.stringify({
-    				connectionCode,
-    				messageType: "connection"
-    			}));
+    			if (socket.readyState === WebSocket.OPEN) {
+    				socket.send(JSON.stringify({
+    					connectionCode,
+    					messageType: "connection"
+    				}));
+    			}
     		};
 
     		socket.onclose = e => {
@@ -2065,10 +2067,12 @@ var app = (function () {
     				$$invalidate(2, phoneHasConnected = true);
     				phoneWebSocketID = data.id;
 
-    				socket.send(JSON.stringify({
-    					connectionCode,
-    					messageType: "connection"
-    				}));
+    				if (socket.readyState === WebSocket.OPEN) {
+    					socket.send(JSON.stringify({
+    						connectionCode,
+    						messageType: "connection"
+    					}));
+    				}
     			} else if (data.messageType === "playvideo") {
     				isPaused.set(false);
     				console.log($isPaused);
@@ -2079,10 +2083,12 @@ var app = (function () {
     		};
 
     		window.onbeforeunload = () => {
-    			socket.send(JSON.stringify({
-    				partnerID: phoneWebSocketID,
-    				messageType: "connectionclosed"
-    			}));
+    			if (socket.readyState === WebSocket.OPEN) {
+    				socket.send(JSON.stringify({
+    					partnerID: phoneWebSocketID,
+    					messageType: "connectionclosed"
+    				}));
+    			}
     		};
     	}
 
@@ -2181,7 +2187,7 @@ var app = (function () {
     const { console: console_1$1 } = globals;
     const file$4 = "src\\Phone.svelte";
 
-    // (108:0) {#if !desktopHasConnected}
+    // (117:0) {#if !desktopHasConnected}
     function create_if_block_1$1(ctx) {
     	let a;
 
@@ -2190,7 +2196,7 @@ var app = (function () {
     			a = element("a");
     			a.textContent = "Go back";
     			attr_dev(a, "href", "/");
-    			add_location(a, file$4, 108, 2, 2309);
+    			add_location(a, file$4, 117, 2, 2599);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
@@ -2204,14 +2210,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(108:0) {#if !desktopHasConnected}",
+    		source: "(117:0) {#if !desktopHasConnected}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (126:0) {:else}
+    // (135:0) {:else}
     function create_else_block$2(ctx) {
     	let h1;
     	let t1;
@@ -2225,10 +2231,10 @@ var app = (function () {
     			t1 = space();
     			img = element("img");
     			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$4, 126, 2, 2727);
+    			add_location(h1, file$4, 135, 2, 3017);
     			if (img.src !== (img_src_value = /*gif*/ ctx[3])) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Gif of somebody running");
-    			add_location(img, file$4, 127, 2, 2796);
+    			add_location(img, file$4, 136, 2, 3086);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
@@ -2247,14 +2253,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(126:0) {:else}",
+    		source: "(135:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (112:0) {#if !socketIsOpen || !desktopHasConnected}
+    // (121:0) {#if !socketIsOpen || !desktopHasConnected}
     function create_if_block$2(ctx) {
     	let h1;
     	let t1;
@@ -2273,15 +2279,15 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Connect";
     			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$4, 112, 2, 2390);
+    			add_location(h1, file$4, 121, 2, 2680);
     			attr_dev(input, "type", "text");
     			attr_dev(input, "name", "connectionCode");
     			attr_dev(input, "autocapitalize", "off");
     			input.autofocus = true;
     			attr_dev(input, "class", "svelte-imh9mg");
-    			add_location(input, file$4, 117, 2, 2531);
+    			add_location(input, file$4, 126, 2, 2821);
     			attr_dev(button, "class", "svelte-imh9mg");
-    			add_location(button, file$4, 124, 2, 2664);
+    			add_location(button, file$4, 133, 2, 2954);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, h1, anchor);
@@ -2317,7 +2323,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(112:0) {#if !socketIsOpen || !desktopHasConnected}",
+    		source: "(121:0) {#if !socketIsOpen || !desktopHasConnected}",
     		ctx
     	});
 
@@ -2412,10 +2418,12 @@ var app = (function () {
     		socket.onopen = e => {
     			$$invalidate(2, socketIsOpen = true);
 
-    			socket.send(JSON.stringify({
-    				connectionCode,
-    				messageType: "connection"
-    			}));
+    			if (socket.readyState === WebSocket.OPEN) {
+    				socket.send(JSON.stringify({
+    					connectionCode,
+    					messageType: "connection"
+    				}));
+    			}
     		};
 
     		socket.onclose = e => {
@@ -2433,10 +2441,12 @@ var app = (function () {
     		};
 
     		window.onbeforeunload = () => {
-    			socket.send(JSON.stringify({
-    				partnerID: desktopWebSocketID,
-    				messageType: "connectionclosed"
-    			}));
+    			if (socket.readyState === WebSocket.OPEN) {
+    				socket.send(JSON.stringify({
+    					partnerID: desktopWebSocketID,
+    					messageType: "connectionclosed"
+    				}));
+    			}
 
     			window.removeEventListener("devicemotion", handleDeviceMotion);
     		};
@@ -2456,15 +2466,19 @@ var app = (function () {
     		}
 
     		if (isRunning && !wasRunningPreviously) {
-    			socket.send(JSON.stringify({
-    				partnerID: desktopWebSocketID,
-    				messageType: "playvideo"
-    			}));
+    			if (socket.readyState === WebSocket.OPEN) {
+    				socket.send(JSON.stringify({
+    					partnerID: desktopWebSocketID,
+    					messageType: "playvideo"
+    				}));
+    			}
     		} else if (!isRunning && wasRunningPreviously) {
-    			socket.send(JSON.stringify({
-    				partnerID: desktopWebSocketID,
-    				messageType: "pausevideo"
-    			}));
+    			if (socket.readyState === WebSocket.OPEN) {
+    				socket.send(JSON.stringify({
+    					partnerID: desktopWebSocketID,
+    					messageType: "pausevideo"
+    				}));
+    			}
     		}
 
     		wasRunningPreviously = isRunning;

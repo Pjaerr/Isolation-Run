@@ -20,12 +20,14 @@
     socket = new WebSocket("wss://" + location.host);
 
     socket.onopen = e => {
-      socket.send(
-        JSON.stringify({
-          connectionCode,
-          messageType: "connection"
-        })
-      );
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            connectionCode,
+            messageType: "connection"
+          })
+        );
+      }
     };
 
     socket.onclose = e => {
@@ -41,12 +43,14 @@
         phoneHasConnected = true;
         phoneWebSocketID = data.id;
 
-        socket.send(
-          JSON.stringify({
-            connectionCode: connectionCode,
-            messageType: "connection"
-          })
-        );
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(
+            JSON.stringify({
+              connectionCode: connectionCode,
+              messageType: "connection"
+            })
+          );
+        }
       } else if (data.messageType === "playvideo") {
         isPaused.set(false);
         console.log($isPaused);
@@ -57,12 +61,14 @@
     };
 
     window.onbeforeunload = () => {
-      socket.send(
-        JSON.stringify({
-          partnerID: phoneWebSocketID,
-          messageType: "connectionclosed"
-        })
-      );
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            partnerID: phoneWebSocketID,
+            messageType: "connectionclosed"
+          })
+        );
+      }
     };
   }
 </script>
