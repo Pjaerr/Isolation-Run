@@ -54,7 +54,7 @@
     }
     .modal {
       width: 820px;
-      height: 620px;
+      height: 580px;
     }
   }
 
@@ -96,7 +96,7 @@
   }
 
   .body-outro {
-    margin-top: 20px;
+    margin-top: 80px;
   }
 
   .body-tech {
