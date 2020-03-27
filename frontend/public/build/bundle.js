@@ -1515,17 +1515,17 @@ var app = (function () {
     			t1 = space();
     			iframe = element("iframe");
     			if (script0.src !== (script0_src_value = "https://www.youtube.com/iframe_api")) attr_dev(script0, "src", script0_src_value);
-    			add_location(script0, file$2, 15, 2, 345);
-    			add_location(script1, file$2, 18, 2, 413);
+    			add_location(script0, file$2, 21, 2, 418);
+    			add_location(script1, file$2, 24, 2, 486);
     			attr_dev(iframe, "title", "youtube video");
     			attr_dev(iframe, "id", "youtube_player_iframe");
     			attr_dev(iframe, "width", "100%");
     			attr_dev(iframe, "height", "100%");
     			if (iframe.src !== (iframe_src_value = "https://www.youtube.com/embed/" + /*youtubeVideoID*/ ctx[0] + "?enablejsapi=1&origin=https://" + location.host + "&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=0&mute=1")) attr_dev(iframe, "src", iframe_src_value);
     			attr_dev(iframe, "frameborder", "0");
-    			attr_dev(iframe, "allow", "autoplay; encrypted-media; fullscreen;");
-    			iframe.allowFullscreen = true;
-    			add_location(iframe, file$2, 35, 0, 836);
+    			attr_dev(iframe, "allow", "autoplay; encrypted-media;");
+    			attr_dev(iframe, "class", "svelte-1cs7gxr");
+    			add_location(iframe, file$2, 41, 0, 909);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2187,7 +2187,7 @@ var app = (function () {
     const { console: console_1$1 } = globals;
     const file$4 = "src\\Phone.svelte";
 
-    // (117:0) {#if !desktopHasConnected}
+    // (139:0) {#if !desktopHasConnected}
     function create_if_block_1$1(ctx) {
     	let a;
 
@@ -2196,7 +2196,7 @@ var app = (function () {
     			a = element("a");
     			a.textContent = "Go back";
     			attr_dev(a, "href", "/");
-    			add_location(a, file$4, 117, 2, 2599);
+    			add_location(a, file$4, 139, 2, 3307);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
@@ -2210,14 +2210,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(117:0) {#if !desktopHasConnected}",
+    		source: "(139:0) {#if !desktopHasConnected}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (135:0) {:else}
+    // (157:0) {:else}
     function create_else_block$2(ctx) {
     	let h1;
     	let t1;
@@ -2231,10 +2231,10 @@ var app = (function () {
     			t1 = space();
     			img = element("img");
     			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$4, 135, 2, 3017);
+    			add_location(h1, file$4, 157, 2, 3725);
     			if (img.src !== (img_src_value = /*gif*/ ctx[3])) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Gif of somebody running");
-    			add_location(img, file$4, 136, 2, 3086);
+    			add_location(img, file$4, 158, 2, 3794);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
@@ -2253,14 +2253,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(135:0) {:else}",
+    		source: "(157:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (121:0) {#if !socketIsOpen || !desktopHasConnected}
+    // (143:0) {#if !socketIsOpen || !desktopHasConnected}
     function create_if_block$2(ctx) {
     	let h1;
     	let t1;
@@ -2279,15 +2279,15 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Connect";
     			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$4, 121, 2, 2680);
+    			add_location(h1, file$4, 143, 2, 3388);
     			attr_dev(input, "type", "text");
     			attr_dev(input, "name", "connectionCode");
     			attr_dev(input, "autocapitalize", "off");
     			input.autofocus = true;
     			attr_dev(input, "class", "svelte-imh9mg");
-    			add_location(input, file$4, 126, 2, 2821);
+    			add_location(input, file$4, 148, 2, 3529);
     			attr_dev(button, "class", "svelte-imh9mg");
-    			add_location(button, file$4, 133, 2, 2954);
+    			add_location(button, file$4, 155, 2, 3662);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, h1, anchor);
@@ -2300,7 +2300,7 @@ var app = (function () {
     			if (remount) run_all(dispose);
 
     			dispose = [
-    				listen_dev(input, "input", /*input_input_handler*/ ctx[10]),
+    				listen_dev(input, "input", /*input_input_handler*/ ctx[14]),
     				listen_dev(button, "click", /*openConnection*/ ctx[4], false, false, false)
     			];
     		},
@@ -2323,7 +2323,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(121:0) {#if !socketIsOpen || !desktopHasConnected}",
+    		source: "(143:0) {#if !socketIsOpen || !desktopHasConnected}",
     		ctx
     	});
 
@@ -2449,30 +2449,46 @@ var app = (function () {
     			}
 
     			window.removeEventListener("devicemotion", handleDeviceMotion);
+    			window.removeEventListener("deviceorientation", handleDeviceOrientation);
     		};
     	}
 
-    	let wasRunningPreviously = false;
-    	let isRunning = false;
+    	let yGravity = 0;
+    	let threshold = 0.3;
+    	let deviceWasLastMovingUpwards = false;
+    	let deviceWasMoving = true;
+    	let isDeviceMoving = false;
 
     	function handleDeviceMotion(e) {
-    		const acceleration = e.acceleration;
-    		let res = acceleration.x + acceleration.y + acceleration.z;
+    		yGravity = e.accelerationIncludingGravity.y;
+    	}
 
-    		if (res > 5 || res < -5) {
-    			isRunning = true;
+    	function handleDeviceOrientation(e) {
+    		if (yGravity - 10 * Math.sin(e.beta * Math.PI / 180) > threshold) {
+    			//We are moving the device up
+    			deviceWasLastMovingUpwards = true;
+    		} else if (yGravity - 10 * Math.sin(e.beta * Math.PI / 180) < -threshold) {
+    			//We are moving the device down
+    			if (deviceWasLastMovingUpwards) {
+    				//We have taken a "step"
+    				isDeviceMoving = true;
+    			}
+
+    			deviceWasLastMovingUpwards = false;
     		} else {
-    			isRunning = false;
+    			isDeviceMoving = false;
     		}
 
-    		if (isRunning && !wasRunningPreviously) {
+    		if (isDeviceMoving && !deviceWasMoving) {
+    			//Send "playvideo" event
     			if (socket.readyState === WebSocket.OPEN) {
     				socket.send(JSON.stringify({
     					partnerID: desktopWebSocketID,
     					messageType: "playvideo"
     				}));
     			}
-    		} else if (!isRunning && wasRunningPreviously) {
+    		} else if (!isDeviceMoving && deviceWasMoving) {
+    			//Send "pausevideo" event
     			if (socket.readyState === WebSocket.OPEN) {
     				socket.send(JSON.stringify({
     					partnerID: desktopWebSocketID,
@@ -2481,7 +2497,7 @@ var app = (function () {
     			}
     		}
 
-    		wasRunningPreviously = isRunning;
+    		deviceWasMoving = isDeviceMoving;
     	}
 
     	const writable_props = [];
@@ -2507,9 +2523,13 @@ var app = (function () {
     		socketIsOpen,
     		socket,
     		openConnection,
-    		wasRunningPreviously,
-    		isRunning,
-    		handleDeviceMotion
+    		yGravity,
+    		threshold,
+    		deviceWasLastMovingUpwards,
+    		deviceWasMoving,
+    		isDeviceMoving,
+    		handleDeviceMotion,
+    		handleDeviceOrientation
     	});
 
     	$$self.$inject_state = $$props => {
@@ -2518,8 +2538,11 @@ var app = (function () {
     		if ("desktopWebSocketID" in $$props) desktopWebSocketID = $$props.desktopWebSocketID;
     		if ("socketIsOpen" in $$props) $$invalidate(2, socketIsOpen = $$props.socketIsOpen);
     		if ("socket" in $$props) socket = $$props.socket;
-    		if ("wasRunningPreviously" in $$props) wasRunningPreviously = $$props.wasRunningPreviously;
-    		if ("isRunning" in $$props) isRunning = $$props.isRunning;
+    		if ("yGravity" in $$props) yGravity = $$props.yGravity;
+    		if ("threshold" in $$props) threshold = $$props.threshold;
+    		if ("deviceWasLastMovingUpwards" in $$props) deviceWasLastMovingUpwards = $$props.deviceWasLastMovingUpwards;
+    		if ("deviceWasMoving" in $$props) deviceWasMoving = $$props.deviceWasMoving;
+    		if ("isDeviceMoving" in $$props) isDeviceMoving = $$props.isDeviceMoving;
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -2530,6 +2553,7 @@ var app = (function () {
     		if ($$self.$$.dirty & /*socketIsOpen, desktopHasConnected*/ 6) {
     			 if (socketIsOpen && desktopHasConnected) {
     				window.addEventListener("devicemotion", handleDeviceMotion);
+    				window.addEventListener("deviceorientation", handleDeviceOrientation);
     			}
     		}
     	};
@@ -2542,9 +2566,13 @@ var app = (function () {
     		openConnection,
     		desktopWebSocketID,
     		socket,
-    		wasRunningPreviously,
-    		isRunning,
+    		yGravity,
+    		deviceWasLastMovingUpwards,
+    		deviceWasMoving,
+    		isDeviceMoving,
+    		threshold,
     		handleDeviceMotion,
+    		handleDeviceOrientation,
     		input_input_handler
     	];
     }

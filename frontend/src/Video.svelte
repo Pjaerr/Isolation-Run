@@ -12,6 +12,12 @@
   }
 </script>
 
+<style>
+  #youtube_player_iframe {
+    cursor: none;
+  }
+</style>
+
 <svelte:head>
   <script src="https://www.youtube.com/iframe_api">
 
@@ -40,5 +46,4 @@
   height="100%"
   src="https://www.youtube.com/embed/{youtubeVideoID}?enablejsapi=1&origin=https://{location.host}&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=0&mute=1"
   frameborder="0"
-  allow="autoplay; encrypted-media; fullscreen;"
-  allowfullscreen />
+  allow="autoplay; encrypted-media;" />

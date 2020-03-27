@@ -51,24 +51,44 @@
       }
 
       window.removeEventListener("devicemotion", handleDeviceMotion);
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
     };
   }
 
-  let wasRunningPreviously = false;
-  let isRunning = false;
+  let yGravity = 0;
+  let threshold = 0.3;
+  let deviceWasLastMovingUpwards = false;
+  let deviceWasMoving = true;
+  let isDeviceMoving = false;
 
   function handleDeviceMotion(e) {
-    const acceleration = e.acceleration;
+    yGravity = e.accelerationIncludingGravity.y;
+  }
 
-    let res = acceleration.x + acceleration.y + acceleration.z;
+  function handleDeviceOrientation(e) {
+    if (yGravity - 10 * Math.sin((e.beta * Math.PI) / 180) > threshold) {
+      //We are moving the device up
 
-    if (res > 5 || res < -5) {
-      isRunning = true;
+      deviceWasLastMovingUpwards = true;
+    } else if (
+      yGravity - 10 * Math.sin((e.beta * Math.PI) / 180) <
+      -threshold
+    ) {
+      //We are moving the device down
+
+      if (deviceWasLastMovingUpwards) {
+        //We have taken a "step"
+
+        isDeviceMoving = true;
+      }
+
+      deviceWasLastMovingUpwards = false;
     } else {
-      isRunning = false;
+      isDeviceMoving = false;
     }
 
-    if (isRunning && !wasRunningPreviously) {
+    if (isDeviceMoving && !deviceWasMoving) {
+      //Send "playvideo" event
       if (socket.readyState === WebSocket.OPEN) {
         socket.send(
           JSON.stringify({
@@ -77,7 +97,8 @@
           })
         );
       }
-    } else if (!isRunning && wasRunningPreviously) {
+    } else if (!isDeviceMoving && deviceWasMoving) {
+      //Send "pausevideo" event
       if (socket.readyState === WebSocket.OPEN) {
         socket.send(
           JSON.stringify({
@@ -88,11 +109,12 @@
       }
     }
 
-    wasRunningPreviously = isRunning;
+    deviceWasMoving = isDeviceMoving;
   }
 
   $: if (socketIsOpen && desktopHasConnected) {
     window.addEventListener("devicemotion", handleDeviceMotion);
+    window.addEventListener("deviceorientation", handleDeviceOrientation);
   }
 </script>
 
