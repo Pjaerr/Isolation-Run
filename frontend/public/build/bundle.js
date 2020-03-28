@@ -121,6 +121,19 @@ var app = (function () {
     function set_style(node, key, value, important) {
         node.style.setProperty(key, value, important ? 'important' : '');
     }
+    function select_option(select, value) {
+        for (let i = 0; i < select.options.length; i += 1) {
+            const option = select.options[i];
+            if (option.__value === value) {
+                option.selected = true;
+                return;
+            }
+        }
+    }
+    function select_value(select) {
+        const selected_option = select.querySelector(':checked') || select.options[0];
+        return selected_option && selected_option.__value;
+    }
     function custom_event(type, detail) {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, false, false, detail);
@@ -1069,185 +1082,73 @@ var app = (function () {
 
     const file$1 = "src\\VideoSelection.svelte";
 
-    // (41:0) {:else}
+    // (56:4) {:else}
     function create_else_block(ctx) {
-    	let button;
-    	let t1;
-    	let b;
-    	let t2;
-    	let a;
-    	let t4;
-    	let div;
-    	let label0;
-    	let input0;
-    	let t5;
-    	let t6;
-    	let label1;
-    	let input1;
-    	let t7;
-    	let t8;
-    	let label2;
-    	let input2;
-    	let t9;
-    	let t10;
-    	let label3;
-    	let input3;
-    	let t11;
-    	let t12;
-    	let label4;
-    	let input4;
-    	let t13;
+    	let label;
+    	let t0;
+    	let select;
+    	let option0;
+    	let option1;
+    	let option2;
+    	let option3;
+    	let option4;
     	let dispose;
 
     	const block = {
     		c: function create() {
-    			button = element("button");
-    			button.textContent = "Click here to choose your own video";
-    			t1 = space();
-    			b = element("b");
-    			t2 = text("All videos courtesy of\r\n    ");
-    			a = element("a");
-    			a.textContent = "Rambalac";
-    			t4 = space();
-    			div = element("div");
-    			label0 = element("label");
-    			input0 = element("input");
-    			t5 = text("\r\n      Tokyo Okutama Mountains");
-    			t6 = space();
-    			label1 = element("label");
-    			input1 = element("input");
-    			t7 = text("\r\n      Midtown Roppongi Hills");
-    			t8 = space();
-    			label2 = element("label");
-    			input2 = element("input");
-    			t9 = text("\r\n      Yokosuka Countryside");
-    			t10 = space();
-    			label3 = element("label");
-    			input3 = element("input");
-    			t11 = text("\r\n      Hirosaki Winter");
-    			t12 = space();
-    			label4 = element("label");
-    			input4 = element("input");
-    			t13 = text("\r\n      Beppu");
-    			attr_dev(button, "class", "option-switcher svelte-19ek1k7");
-    			add_location(button, file$1, 41, 2, 802);
-    			attr_dev(a, "href", "https://www.youtube.com/channel/UCAcsAE1tpLuP3y7UhxUoWpQ");
-    			add_location(a, file$1, 52, 4, 1026);
-    			add_location(b, file$1, 50, 2, 989);
-    			attr_dev(input0, "type", "radio");
-    			input0.__value = "DHq0pLFavyc";
-    			input0.value = input0.__value;
-    			/*$$binding_groups*/ ctx[6][0].push(input0);
-    			add_location(input0, file$1, 59, 6, 1178);
-    			attr_dev(label0, "class", "svelte-19ek1k7");
-    			add_location(label0, file$1, 58, 4, 1163);
-    			attr_dev(input1, "type", "radio");
-    			input1.__value = "1aqM14CYb4Y";
-    			input1.value = input1.__value;
-    			/*$$binding_groups*/ ctx[6][0].push(input1);
-    			add_location(input1, file$1, 64, 6, 1315);
-    			attr_dev(label1, "class", "svelte-19ek1k7");
-    			add_location(label1, file$1, 63, 4, 1300);
-    			attr_dev(input2, "type", "radio");
-    			input2.__value = "PLnELXJ-tLs";
-    			input2.value = input2.__value;
-    			/*$$binding_groups*/ ctx[6][0].push(input2);
-    			add_location(input2, file$1, 69, 6, 1451);
-    			attr_dev(label2, "class", "svelte-19ek1k7");
-    			add_location(label2, file$1, 68, 4, 1436);
-    			attr_dev(input3, "type", "radio");
-    			input3.__value = "jW7SxamQS9M";
-    			input3.value = input3.__value;
-    			/*$$binding_groups*/ ctx[6][0].push(input3);
-    			add_location(input3, file$1, 74, 6, 1585);
-    			attr_dev(label3, "class", "svelte-19ek1k7");
-    			add_location(label3, file$1, 73, 4, 1570);
-    			attr_dev(input4, "type", "radio");
-    			input4.__value = "8mQ454kcPJY";
-    			input4.value = input4.__value;
-    			/*$$binding_groups*/ ctx[6][0].push(input4);
-    			add_location(input4, file$1, 79, 6, 1714);
-    			attr_dev(label4, "class", "svelte-19ek1k7");
-    			add_location(label4, file$1, 78, 4, 1699);
-    			attr_dev(div, "class", "video-list svelte-19ek1k7");
-    			add_location(div, file$1, 57, 2, 1133);
+    			label = element("label");
+    			t0 = text("Choose Scene:\r\n        ");
+    			select = element("select");
+    			option0 = element("option");
+    			option0.textContent = "Mountains";
+    			option1 = element("option");
+    			option1.textContent = "Hills";
+    			option2 = element("option");
+    			option2.textContent = "Countryside";
+    			option3 = element("option");
+    			option3.textContent = "Winter Walk";
+    			option4 = element("option");
+    			option4.textContent = "City";
+    			option0.__value = "1aqM14CYb4Y";
+    			option0.value = option0.__value;
+    			add_location(option0, file$1, 59, 10, 1248);
+    			option1.__value = "1aqM14CYb4Y";
+    			option1.value = option1.__value;
+    			add_location(option1, file$1, 60, 10, 1306);
+    			option2.__value = "PLnELXJ-tLs";
+    			option2.value = option2.__value;
+    			add_location(option2, file$1, 61, 10, 1360);
+    			option3.__value = "jW7SxamQS9M";
+    			option3.value = option3.__value;
+    			add_location(option3, file$1, 62, 10, 1420);
+    			option4.__value = "8mQ454kcPJY";
+    			option4.value = option4.__value;
+    			add_location(option4, file$1, 63, 10, 1480);
+    			if (/*selectedVideo*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[6].call(select));
+    			add_location(select, file$1, 58, 8, 1201);
+    			add_location(label, file$1, 56, 6, 1161);
     		},
     		m: function mount(target, anchor, remount) {
-    			insert_dev(target, button, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, b, anchor);
-    			append_dev(b, t2);
-    			append_dev(b, a);
-    			insert_dev(target, t4, anchor);
-    			insert_dev(target, div, anchor);
-    			append_dev(div, label0);
-    			append_dev(label0, input0);
-    			input0.checked = input0.__value === /*selectedVideo*/ ctx[0];
-    			append_dev(label0, t5);
-    			append_dev(div, t6);
-    			append_dev(div, label1);
-    			append_dev(label1, input1);
-    			input1.checked = input1.__value === /*selectedVideo*/ ctx[0];
-    			append_dev(label1, t7);
-    			append_dev(div, t8);
-    			append_dev(div, label2);
-    			append_dev(label2, input2);
-    			input2.checked = input2.__value === /*selectedVideo*/ ctx[0];
-    			append_dev(label2, t9);
-    			append_dev(div, t10);
-    			append_dev(div, label3);
-    			append_dev(label3, input3);
-    			input3.checked = input3.__value === /*selectedVideo*/ ctx[0];
-    			append_dev(label3, t11);
-    			append_dev(div, t12);
-    			append_dev(div, label4);
-    			append_dev(label4, input4);
-    			input4.checked = input4.__value === /*selectedVideo*/ ctx[0];
-    			append_dev(label4, t13);
-    			if (remount) run_all(dispose);
-
-    			dispose = [
-    				listen_dev(button, "click", /*click_handler_1*/ ctx[4], false, false, false),
-    				listen_dev(input0, "change", /*input0_change_handler*/ ctx[5]),
-    				listen_dev(input1, "change", /*input1_change_handler*/ ctx[7]),
-    				listen_dev(input2, "change", /*input2_change_handler*/ ctx[8]),
-    				listen_dev(input3, "change", /*input3_change_handler*/ ctx[9]),
-    				listen_dev(input4, "change", /*input4_change_handler*/ ctx[10])
-    			];
+    			insert_dev(target, label, anchor);
+    			append_dev(label, t0);
+    			append_dev(label, select);
+    			append_dev(select, option0);
+    			append_dev(select, option1);
+    			append_dev(select, option2);
+    			append_dev(select, option3);
+    			append_dev(select, option4);
+    			select_option(select, /*selectedVideo*/ ctx[0]);
+    			if (remount) dispose();
+    			dispose = listen_dev(select, "change", /*select_change_handler*/ ctx[6]);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*selectedVideo*/ 1) {
-    				input0.checked = input0.__value === /*selectedVideo*/ ctx[0];
-    			}
-
-    			if (dirty & /*selectedVideo*/ 1) {
-    				input1.checked = input1.__value === /*selectedVideo*/ ctx[0];
-    			}
-
-    			if (dirty & /*selectedVideo*/ 1) {
-    				input2.checked = input2.__value === /*selectedVideo*/ ctx[0];
-    			}
-
-    			if (dirty & /*selectedVideo*/ 1) {
-    				input3.checked = input3.__value === /*selectedVideo*/ ctx[0];
-    			}
-
-    			if (dirty & /*selectedVideo*/ 1) {
-    				input4.checked = input4.__value === /*selectedVideo*/ ctx[0];
+    				select_option(select, /*selectedVideo*/ ctx[0]);
     			}
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(button);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(b);
-    			if (detaching) detach_dev(t4);
-    			if (detaching) detach_dev(div);
-    			/*$$binding_groups*/ ctx[6][0].splice(/*$$binding_groups*/ ctx[6][0].indexOf(input0), 1);
-    			/*$$binding_groups*/ ctx[6][0].splice(/*$$binding_groups*/ ctx[6][0].indexOf(input1), 1);
-    			/*$$binding_groups*/ ctx[6][0].splice(/*$$binding_groups*/ ctx[6][0].indexOf(input2), 1);
-    			/*$$binding_groups*/ ctx[6][0].splice(/*$$binding_groups*/ ctx[6][0].indexOf(input3), 1);
-    			/*$$binding_groups*/ ctx[6][0].splice(/*$$binding_groups*/ ctx[6][0].indexOf(input4), 1);
-    			run_all(dispose);
+    			if (detaching) detach_dev(label);
+    			dispose();
     		}
     	};
 
@@ -1255,62 +1156,44 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(41:0) {:else}",
+    		source: "(56:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (24:0) {#if userDefinedVideo}
+    // (49:4) {#if isUserDefinedOption}
     function create_if_block(ctx) {
-    	let button;
-    	let t1;
-    	let div;
     	let label;
-    	let t2;
+    	let t0;
     	let b;
-    	let t4;
+    	let t2;
     	let input;
     	let dispose;
 
     	const block = {
     		c: function create() {
-    			button = element("button");
-    			button.textContent = "Click here to choose from a list of videos";
-    			t1 = space();
-    			div = element("div");
     			label = element("label");
-    			t2 = text("YouTube Video ID (eg: youtube.com/watch?v=\r\n      ");
+    			t0 = text("Video ID (eg: youtube.com/watch?v=\r\n        ");
     			b = element("b");
     			b.textContent = "Hndf5JRwUL0";
-    			t4 = text("\r\n      ):\r\n      ");
+    			t2 = text("\r\n        ) :\r\n        ");
     			input = element("input");
-    			attr_dev(button, "class", "option-switcher svelte-19ek1k7");
-    			add_location(button, file$1, 24, 2, 374);
-    			add_location(b, file$1, 35, 6, 681);
+    			add_location(b, file$1, 51, 8, 1035);
     			attr_dev(input, "type", "text");
-    			add_location(input, file$1, 37, 6, 717);
-    			add_location(label, file$1, 33, 4, 616);
-    			attr_dev(div, "class", "user-defined-video");
-    			add_location(div, file$1, 32, 2, 578);
+    			add_location(input, file$1, 53, 8, 1076);
+    			add_location(label, file$1, 49, 6, 974);
     		},
     		m: function mount(target, anchor, remount) {
-    			insert_dev(target, button, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, div, anchor);
-    			append_dev(div, label);
-    			append_dev(label, t2);
+    			insert_dev(target, label, anchor);
+    			append_dev(label, t0);
     			append_dev(label, b);
-    			append_dev(label, t4);
+    			append_dev(label, t2);
     			append_dev(label, input);
     			set_input_value(input, /*selectedVideo*/ ctx[0]);
-    			if (remount) run_all(dispose);
-
-    			dispose = [
-    				listen_dev(button, "click", /*click_handler*/ ctx[2], false, false, false),
-    				listen_dev(input, "input", /*input_input_handler*/ ctx[3])
-    			];
+    			if (remount) dispose();
+    			dispose = listen_dev(input, "input", /*input_input_handler*/ ctx[5]);
     		},
     		p: function update(ctx, dirty) {
     			if (dirty & /*selectedVideo*/ 1 && input.value !== /*selectedVideo*/ ctx[0]) {
@@ -1318,10 +1201,8 @@ var app = (function () {
     			}
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(button);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(div);
-    			run_all(dispose);
+    			if (detaching) detach_dev(label);
+    			dispose();
     		}
     	};
 
@@ -1329,7 +1210,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(24:0) {#if userDefinedVideo}",
+    		source: "(49:4) {#if isUserDefinedOption}",
     		ctx
     	});
 
@@ -1337,10 +1218,23 @@ var app = (function () {
     }
 
     function create_fragment$1(ctx) {
-    	let if_block_anchor;
+    	let section;
+    	let div0;
+    	let label0;
+    	let input0;
+    	let input0_value_value;
+    	let t0;
+    	let t1;
+    	let label1;
+    	let input1;
+    	let input1_value_value;
+    	let t2;
+    	let t3;
+    	let div1;
+    	let dispose;
 
     	function select_block_type(ctx, dirty) {
-    		if (/*userDefinedVideo*/ ctx[1]) return create_if_block;
+    		if (/*isUserDefinedOption*/ ctx[1]) return create_if_block;
     		return create_else_block;
     	}
 
@@ -1349,17 +1243,73 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			section = element("section");
+    			div0 = element("div");
+    			label0 = element("label");
+    			input0 = element("input");
+    			t0 = text("\r\n      Choose a predefined video");
+    			t1 = space();
+    			label1 = element("label");
+    			input1 = element("input");
+    			t2 = text("\r\n      Choose your own video");
+    			t3 = space();
+    			div1 = element("div");
     			if_block.c();
-    			if_block_anchor = empty();
+    			attr_dev(input0, "type", "radio");
+    			input0.__value = input0_value_value = false;
+    			input0.value = input0.__value;
+    			/*$$binding_groups*/ ctx[3][0].push(input0);
+    			add_location(input0, file$1, 38, 6, 645);
+    			attr_dev(label0, "class", "svelte-1mescb9");
+    			add_location(label0, file$1, 37, 4, 630);
+    			attr_dev(input1, "type", "radio");
+    			input1.__value = input1_value_value = true;
+    			input1.value = input1.__value;
+    			/*$$binding_groups*/ ctx[3][0].push(input1);
+    			add_location(input1, file$1, 42, 6, 782);
+    			attr_dev(label1, "class", "svelte-1mescb9");
+    			add_location(label1, file$1, 41, 4, 767);
+    			attr_dev(div0, "class", "mode-input svelte-1mescb9");
+    			add_location(div0, file$1, 36, 2, 600);
+    			attr_dev(div1, "class", "option-input svelte-1mescb9");
+    			add_location(div1, file$1, 47, 2, 909);
+    			attr_dev(section, "class", "video-selection svelte-1mescb9");
+    			add_location(section, file$1, 35, 0, 563);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
-    		m: function mount(target, anchor) {
-    			if_block.m(target, anchor);
-    			insert_dev(target, if_block_anchor, anchor);
+    		m: function mount(target, anchor, remount) {
+    			insert_dev(target, section, anchor);
+    			append_dev(section, div0);
+    			append_dev(div0, label0);
+    			append_dev(label0, input0);
+    			input0.checked = input0.__value === /*isUserDefinedOption*/ ctx[1];
+    			append_dev(label0, t0);
+    			append_dev(div0, t1);
+    			append_dev(div0, label1);
+    			append_dev(label1, input1);
+    			input1.checked = input1.__value === /*isUserDefinedOption*/ ctx[1];
+    			append_dev(label1, t2);
+    			append_dev(section, t3);
+    			append_dev(section, div1);
+    			if_block.m(div1, null);
+    			if (remount) run_all(dispose);
+
+    			dispose = [
+    				listen_dev(input0, "change", /*input0_change_handler*/ ctx[2]),
+    				listen_dev(input1, "change", /*input1_change_handler*/ ctx[4])
+    			];
     		},
     		p: function update(ctx, [dirty]) {
+    			if (dirty & /*isUserDefinedOption*/ 2) {
+    				input0.checked = input0.__value === /*isUserDefinedOption*/ ctx[1];
+    			}
+
+    			if (dirty & /*isUserDefinedOption*/ 2) {
+    				input1.checked = input1.__value === /*isUserDefinedOption*/ ctx[1];
+    			}
+
     			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
     				if_block.p(ctx, dirty);
     			} else {
@@ -1368,15 +1318,18 @@ var app = (function () {
 
     				if (if_block) {
     					if_block.c();
-    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    					if_block.m(div1, null);
     				}
     			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if_block.d(detaching);
-    			if (detaching) detach_dev(if_block_anchor);
+    			if (detaching) detach_dev(section);
+    			/*$$binding_groups*/ ctx[3][0].splice(/*$$binding_groups*/ ctx[3][0].indexOf(input0), 1);
+    			/*$$binding_groups*/ ctx[3][0].splice(/*$$binding_groups*/ ctx[3][0].indexOf(input1), 1);
+    			if_block.d();
+    			run_all(dispose);
     		}
     	};
 
@@ -1393,7 +1346,7 @@ var app = (function () {
 
     function instance$1($$self, $$props, $$invalidate) {
     	let { selectedVideo = "DHq0pLFavyc" } = $$props;
-    	let userDefinedVideo = false;
+    	let isUserDefinedOption = false;
     	const writable_props = ["selectedVideo"];
 
     	Object.keys($$props).forEach(key => {
@@ -1404,73 +1357,57 @@ var app = (function () {
     	validate_slots("VideoSelection", $$slots, []);
     	const $$binding_groups = [[]];
 
-    	const click_handler = () => {
-    		$$invalidate(1, userDefinedVideo = false);
-    		$$invalidate(0, selectedVideo = "DHq0pLFavyc");
-    	};
-
-    	function input_input_handler() {
-    		selectedVideo = this.value;
-    		$$invalidate(0, selectedVideo);
-    	}
-
-    	const click_handler_1 = () => {
-    		$$invalidate(1, userDefinedVideo = true);
-    		$$invalidate(0, selectedVideo = "");
-    	};
-
     	function input0_change_handler() {
-    		selectedVideo = this.__value;
-    		$$invalidate(0, selectedVideo);
+    		isUserDefinedOption = this.__value;
+    		$$invalidate(1, isUserDefinedOption);
     	}
 
     	function input1_change_handler() {
-    		selectedVideo = this.__value;
-    		$$invalidate(0, selectedVideo);
+    		isUserDefinedOption = this.__value;
+    		$$invalidate(1, isUserDefinedOption);
     	}
 
-    	function input2_change_handler() {
-    		selectedVideo = this.__value;
-    		$$invalidate(0, selectedVideo);
+    	function input_input_handler() {
+    		selectedVideo = this.value;
+    		($$invalidate(0, selectedVideo), $$invalidate(1, isUserDefinedOption));
     	}
 
-    	function input3_change_handler() {
-    		selectedVideo = this.__value;
-    		$$invalidate(0, selectedVideo);
-    	}
-
-    	function input4_change_handler() {
-    		selectedVideo = this.__value;
-    		$$invalidate(0, selectedVideo);
+    	function select_change_handler() {
+    		selectedVideo = select_value(this);
+    		($$invalidate(0, selectedVideo), $$invalidate(1, isUserDefinedOption));
     	}
 
     	$$self.$set = $$props => {
     		if ("selectedVideo" in $$props) $$invalidate(0, selectedVideo = $$props.selectedVideo);
     	};
 
-    	$$self.$capture_state = () => ({ selectedVideo, userDefinedVideo });
+    	$$self.$capture_state = () => ({ selectedVideo, isUserDefinedOption });
 
     	$$self.$inject_state = $$props => {
     		if ("selectedVideo" in $$props) $$invalidate(0, selectedVideo = $$props.selectedVideo);
-    		if ("userDefinedVideo" in $$props) $$invalidate(1, userDefinedVideo = $$props.userDefinedVideo);
+    		if ("isUserDefinedOption" in $$props) $$invalidate(1, isUserDefinedOption = $$props.isUserDefinedOption);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*isUserDefinedOption*/ 2) {
+    			 if (isUserDefinedOption) {
+    				$$invalidate(0, selectedVideo = "");
+    			}
+    		}
+    	};
+
     	return [
     		selectedVideo,
-    		userDefinedVideo,
-    		click_handler,
-    		input_input_handler,
-    		click_handler_1,
+    		isUserDefinedOption,
     		input0_change_handler,
     		$$binding_groups,
     		input1_change_handler,
-    		input2_change_handler,
-    		input3_change_handler,
-    		input4_change_handler
+    		input_input_handler,
+    		select_change_handler
     	];
     }
 
@@ -1521,7 +1458,7 @@ var app = (function () {
     			attr_dev(iframe, "id", "youtube_player_iframe");
     			attr_dev(iframe, "width", "100%");
     			attr_dev(iframe, "height", "100%");
-    			if (iframe.src !== (iframe_src_value = "https://www.youtube.com/embed/" + /*youtubeVideoID*/ ctx[0] + "?enablejsapi=1&origin=https://" + location.host + "&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=0&mute=1")) attr_dev(iframe, "src", iframe_src_value);
+    			if (iframe.src !== (iframe_src_value = "https://www.youtube.com/embed/" + /*youtubeVideoID*/ ctx[0] + "?enablejsapi=1&origin=https://" + location.host + "&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=1")) attr_dev(iframe, "src", iframe_src_value);
     			attr_dev(iframe, "frameborder", "0");
     			attr_dev(iframe, "allow", "autoplay; encrypted-media;");
     			attr_dev(iframe, "class", "svelte-1cs7gxr");
@@ -1537,7 +1474,7 @@ var app = (function () {
     			insert_dev(target, iframe, anchor);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*youtubeVideoID*/ 1 && iframe.src !== (iframe_src_value = "https://www.youtube.com/embed/" + /*youtubeVideoID*/ ctx[0] + "?enablejsapi=1&origin=https://" + location.host + "&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=0&mute=1")) {
+    			if (dirty & /*youtubeVideoID*/ 1 && iframe.src !== (iframe_src_value = "https://www.youtube.com/embed/" + /*youtubeVideoID*/ ctx[0] + "?enablejsapi=1&origin=https://" + location.host + "&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=1")) {
     				attr_dev(iframe, "src", iframe_src_value);
     			}
     		},
@@ -1637,8 +1574,6 @@ var app = (function () {
     }
 
     /* src\Computer.svelte generated by Svelte v3.20.1 */
-
-    const { console: console_1 } = globals;
     const file$3 = "src\\Computer.svelte";
 
     // (94:0) {#if !phoneHasConnected}
@@ -1649,8 +1584,9 @@ var app = (function () {
     		c: function create() {
     			a = element("a");
     			a.textContent = "Go back";
+    			attr_dev(a, "class", "back-button svelte-binvma");
     			attr_dev(a, "href", "/");
-    			add_location(a, file$3, 94, 2, 2069);
+    			add_location(a, file$3, 94, 2, 2010);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
@@ -1682,7 +1618,7 @@ var app = (function () {
     	let dispose;
 
     	function videoselection_selectedVideo_binding(value) {
-    		/*videoselection_selectedVideo_binding*/ ctx[9].call(null, value);
+    		/*videoselection_selectedVideo_binding*/ ctx[8].call(null, value);
     	}
 
     	let videoselection_props = {};
@@ -1701,16 +1637,16 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			h1 = element("h1");
-    			h1.textContent = "Choose predefined video/scene, or use your own:";
+    			h1.textContent = "Choose your video:";
     			t1 = space();
     			create_component(videoselection.$$.fragment);
     			t2 = space();
     			button = element("button");
-    			button.textContent = "Choose Video";
-    			attr_dev(h1, "class", "svelte-1wg9sjd");
-    			add_location(h1, file$3, 105, 2, 2338);
-    			attr_dev(button, "class", "svelte-1wg9sjd");
-    			add_location(button, file$3, 107, 2, 2439);
+    			button.textContent = "Go!";
+    			attr_dev(h1, "class", "svelte-binvma");
+    			add_location(h1, file$3, 105, 2, 2299);
+    			attr_dev(button, "class", "svelte-binvma");
+    			add_location(button, file$3, 107, 2, 2371);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, h1, anchor);
@@ -1720,7 +1656,7 @@ var app = (function () {
     			insert_dev(target, button, anchor);
     			current = true;
     			if (remount) dispose();
-    			dispose = listen_dev(button, "click", /*click_handler*/ ctx[10], false, false, false);
+    			dispose = listen_dev(button, "click", /*click_handler*/ ctx[9], false, false, false);
     		},
     		p: function update(ctx, dirty) {
     			const videoselection_changes = {};
@@ -1854,10 +1790,10 @@ var app = (function () {
     			t1 = space();
     			h11 = element("h1");
     			h11.textContent = `${/*connectionCode*/ ctx[3]}`;
-    			attr_dev(h10, "class", "svelte-1wg9sjd");
-    			add_location(h10, file$3, 101, 4, 2213);
-    			attr_dev(h11, "class", "code svelte-1wg9sjd");
-    			add_location(h11, file$3, 102, 4, 2278);
+    			attr_dev(h10, "class", "svelte-binvma");
+    			add_location(h10, file$3, 101, 4, 2174);
+    			attr_dev(h11, "class", "code svelte-binvma");
+    			add_location(h11, file$3, 102, 4, 2239);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h10, anchor);
@@ -2032,9 +1968,6 @@ var app = (function () {
     }
 
     function instance$3($$self, $$props, $$invalidate) {
-    	let $isPaused;
-    	validate_store(isPaused, "isPaused");
-    	component_subscribe($$self, isPaused, $$value => $$invalidate(7, $isPaused = $$value));
     	let hasChosenVideo = false;
     	let selectedVideo;
     	const connectionCode = v4().substring(0, 8);
@@ -2061,7 +1994,6 @@ var app = (function () {
 
     		socket.onmessage = e => {
     			const data = JSON.parse(e.data);
-    			console.log("Received a message");
 
     			if (data.messageType === "connection") {
     				$$invalidate(2, phoneHasConnected = true);
@@ -2075,10 +2007,8 @@ var app = (function () {
     				}
     			} else if (data.messageType === "playvideo") {
     				isPaused.set(false);
-    				console.log($isPaused);
     			} else if (data.messageType === "pausevideo") {
     				isPaused.set(true);
-    				console.log($isPaused);
     			}
     		};
 
@@ -2095,7 +2025,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1.warn(`<Computer> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Computer> was created with unknown prop '${key}'`);
     	});
 
     	let { $$slots = {}, $$scope } = $$props;
@@ -2123,8 +2053,7 @@ var app = (function () {
     		phoneHasConnected,
     		socket,
     		socketIsOpen,
-    		openConnection,
-    		$isPaused
+    		openConnection
     	});
 
     	$$self.$inject_state = $$props => {
@@ -2148,7 +2077,6 @@ var app = (function () {
     		openConnection,
     		phoneWebSocketID,
     		socket,
-    		$isPaused,
     		socketIsOpen,
     		videoselection_selectedVideo_binding,
     		click_handler
@@ -2184,10 +2112,10 @@ var app = (function () {
 
     /* src\Phone.svelte generated by Svelte v3.20.1 */
 
-    const { console: console_1$1 } = globals;
+    const { console: console_1 } = globals;
     const file$4 = "src\\Phone.svelte";
 
-    // (139:0) {#if !desktopHasConnected}
+    // (143:0) {#if !desktopHasConnected}
     function create_if_block_1$1(ctx) {
     	let a;
 
@@ -2195,8 +2123,9 @@ var app = (function () {
     		c: function create() {
     			a = element("a");
     			a.textContent = "Go back";
+    			attr_dev(a, "class", "back-button svelte-leyv7d");
     			attr_dev(a, "href", "/");
-    			add_location(a, file$4, 139, 2, 3307);
+    			add_location(a, file$4, 143, 2, 3358);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
@@ -2210,14 +2139,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(139:0) {#if !desktopHasConnected}",
+    		source: "(143:0) {#if !desktopHasConnected}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (157:0) {:else}
+    // (162:0) {:else}
     function create_else_block$2(ctx) {
     	let h1;
     	let t1;
@@ -2230,11 +2159,11 @@ var app = (function () {
     			h1.textContent = "Keep your phone screen unlocked and start running! 🏃‍♀️";
     			t1 = space();
     			img = element("img");
-    			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$4, 157, 2, 3725);
+    			attr_dev(h1, "class", "svelte-leyv7d");
+    			add_location(h1, file$4, 162, 2, 3820);
     			if (img.src !== (img_src_value = /*gif*/ ctx[3])) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Gif of somebody running");
-    			add_location(img, file$4, 158, 2, 3794);
+    			add_location(img, file$4, 163, 2, 3889);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
@@ -2253,14 +2182,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(157:0) {:else}",
+    		source: "(162:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (143:0) {#if !socketIsOpen || !desktopHasConnected}
+    // (147:0) {#if !socketIsOpen || !desktopHasConnected}
     function create_if_block$2(ctx) {
     	let h1;
     	let t1;
@@ -2278,16 +2207,17 @@ var app = (function () {
     			t2 = space();
     			button = element("button");
     			button.textContent = "Connect";
-    			attr_dev(h1, "class", "svelte-imh9mg");
-    			add_location(h1, file$4, 143, 2, 3388);
+    			attr_dev(h1, "class", "svelte-leyv7d");
+    			add_location(h1, file$4, 147, 2, 3459);
     			attr_dev(input, "type", "text");
     			attr_dev(input, "name", "connectionCode");
     			attr_dev(input, "autocapitalize", "off");
+    			attr_dev(input, "autocomplete", "off");
     			input.autofocus = true;
-    			attr_dev(input, "class", "svelte-imh9mg");
-    			add_location(input, file$4, 148, 2, 3529);
-    			attr_dev(button, "class", "svelte-imh9mg");
-    			add_location(button, file$4, 155, 2, 3662);
+    			attr_dev(input, "class", "svelte-leyv7d");
+    			add_location(input, file$4, 152, 2, 3600);
+    			attr_dev(button, "class", "svelte-leyv7d");
+    			add_location(button, file$4, 160, 2, 3757);
     		},
     		m: function mount(target, anchor, remount) {
     			insert_dev(target, h1, anchor);
@@ -2323,7 +2253,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(143:0) {#if !socketIsOpen || !desktopHasConnected}",
+    		source: "(147:0) {#if !socketIsOpen || !desktopHasConnected}",
     		ctx
     	});
 
@@ -2503,7 +2433,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$1.warn(`<Phone> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1.warn(`<Phone> was created with unknown prop '${key}'`);
     	});
 
     	let { $$slots = {}, $$scope } = $$props;
