@@ -134,10 +134,14 @@
     width: 10em;
     max-width: 95%;
   }
+
+  .back-button {
+    margin-bottom: 40px;
+  }
 </style>
 
 {#if !desktopHasConnected}
-  <a href="/">Go back</a>
+  <a class="back-button" href="/">Go back</a>
 {/if}
 
 {#if !socketIsOpen || !desktopHasConnected}
@@ -151,6 +155,7 @@
     name="connectionCode"
     bind:value={connectionCode}
     autocapitalize="off"
+    autocomplete="off"
     autofocus />
 
   <button on:click={openConnection}>Connect</button>

@@ -37,8 +37,6 @@
     socket.onmessage = e => {
       const data = JSON.parse(e.data);
 
-      console.log("Received a message");
-
       if (data.messageType === "connection") {
         phoneHasConnected = true;
         phoneWebSocketID = data.id;
@@ -53,10 +51,8 @@
         }
       } else if (data.messageType === "playvideo") {
         isPaused.set(false);
-        console.log($isPaused);
       } else if (data.messageType === "pausevideo") {
         isPaused.set(true);
-        console.log($isPaused);
       }
     };
 
@@ -89,10 +85,14 @@
     width: 10em;
     max-width: 95%;
   }
+
+  .back-button {
+    margin-bottom: 40px;
+  }
 </style>
 
 {#if !phoneHasConnected}
-  <a href="/">Go back</a>
+  <a class="back-button" href="/">Go back</a>
 {/if}
 
 {#if hasChosenVideo}
@@ -103,13 +103,13 @@
     <h1 class="code">{connectionCode}</h1>
   {/if}
 {:else}
-  <h1>Choose predefined video/scene, or use your own:</h1>
+  <h1>Choose your video:</h1>
   <VideoSelection bind:selectedVideo />
   <button
     on:click={() => {
       hasChosenVideo = true;
       openConnection();
     }}>
-    Choose Video
+    Go!
   </button>
 {/if}

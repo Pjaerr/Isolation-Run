@@ -1,84 +1,69 @@
 <script>
   export let selectedVideo = "DHq0pLFavyc";
 
-  let userDefinedVideo = false;
+  let isUserDefinedOption = false;
+
+  $: if (isUserDefinedOption) {
+    selectedVideo = "";
+  }
 </script>
 
 <style>
-  .video-list {
-    display: flex;
-    flex-direction: column;
-    margin: 40px;
-  }
-
-  .video-list > label {
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-
-  .option-switcher {
+  .video-selection {
+    margin-top: 40px;
     margin-bottom: 40px;
+  }
+  .mode-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .mode-input > :first-child {
+    margin-right: 20px;
+  }
+
+  .mode-input > :last-child {
+    margin-left: 20px;
+  }
+
+  .option-input {
+    margin: 20px;
   }
 </style>
 
-{#if userDefinedVideo}
-  <button
-    class="option-switcher"
-    on:click={() => {
-      userDefinedVideo = false;
-      selectedVideo = 'DHq0pLFavyc';
-    }}>
-    Click here to choose from a list of videos
-  </button>
-  <div class="user-defined-video">
+<section class="video-selection">
+  <div class="mode-input">
     <label>
-      YouTube Video ID (eg: youtube.com/watch?v=
-      <b>Hndf5JRwUL0</b>
-      ):
-      <input type="text" bind:value={selectedVideo} />
+      <input type="radio" bind:group={isUserDefinedOption} value={false} />
+      Choose a predefined video
+    </label>
+    <label>
+      <input type="radio" bind:group={isUserDefinedOption} value={true} />
+      Choose your own video
     </label>
   </div>
-{:else}
-  <button
-    class="option-switcher"
-    on:click={() => {
-      userDefinedVideo = true;
-      selectedVideo = '';
-    }}>
-    Click here to choose your own video
-  </button>
 
-  <b>
-    All videos courtesy of
-    <a href="https://www.youtube.com/channel/UCAcsAE1tpLuP3y7UhxUoWpQ">
-      Rambalac
-    </a>
-  </b>
-
-  <div class="video-list">
-    <label>
-      <input type="radio" bind:group={selectedVideo} value="DHq0pLFavyc" />
-      Tokyo Okutama Mountains
-    </label>
-
-    <label>
-      <input type="radio" bind:group={selectedVideo} value="1aqM14CYb4Y" />
-      Midtown Roppongi Hills
-    </label>
-
-    <label>
-      <input type="radio" bind:group={selectedVideo} value="PLnELXJ-tLs" />
-      Yokosuka Countryside
-    </label>
-
-    <label>
-      <input type="radio" bind:group={selectedVideo} value="jW7SxamQS9M" />
-      Hirosaki Winter
-    </label>
-
-    <label>
-      <input type="radio" bind:group={selectedVideo} value="8mQ454kcPJY" />
-      Beppu
-    </label>
+  <div class="option-input">
+    {#if isUserDefinedOption}
+      <label>
+        Video ID (eg: youtube.com/watch?v=
+        <b>Hndf5JRwUL0</b>
+        ) :
+        <input type="text" bind:value={selectedVideo} />
+      </label>
+    {:else}
+      <label>
+        Choose Scene:
+        <select bind:value={selectedVideo}>
+          <option value="1aqM14CYb4Y">Mountains</option>
+          <option value="1aqM14CYb4Y">Hills</option>
+          <option value="PLnELXJ-tLs">Countryside</option>
+          <option value="jW7SxamQS9M">Winter Walk</option>
+          <option value="8mQ454kcPJY">City</option>
+        </select>
+      </label>
+    {/if}
   </div>
-{/if}
+</section>
