@@ -4,10 +4,12 @@
   export let youtubeVideoID;
 
   $: if ($isPaused === true) {
+    console.log("Pausing Video");
     if (window.YOUTUBE_PLAYER_ISREADY) window.YOUTUBE_PLAYER.pauseVideo();
   }
 
   $: if ($isPaused === false) {
+    console.log("Playing Video");
     if (window.YOUTUBE_PLAYER_ISREADY) window.YOUTUBE_PLAYER.playVideo();
   }
 </script>

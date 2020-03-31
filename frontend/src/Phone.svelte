@@ -1,4 +1,5 @@
 <script>
+  import { accelerometer } from "./accelerometer";
   import gifs from "./gifs.js";
 
   const gif = gifs[Math.floor(Math.random() * (gifs.length - 1 + 1))];
@@ -55,66 +56,44 @@
     };
   }
 
-  let yGravity = 0;
-  let threshold = 0.3;
-  let deviceWasLastMovingUpwards = false;
+  const playVideo = () => {
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(
+        JSON.stringify({
+          partnerID: desktopWebSocketID,
+          messageType: "playvideo"
+        })
+      );
+    }
+  };
+
+  const pauseVideo = () => {
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(
+        JSON.stringify({
+          partnerID: desktopWebSocketID,
+          messageType: "pausevideo"
+        })
+      );
+    }
+  };
+
   let deviceWasMoving = true;
-  let isDeviceMoving = false;
-
-  function handleDeviceMotion(e) {
-    yGravity = e.accelerationIncludingGravity.y;
-  }
-
-  function handleDeviceOrientation(e) {
-    if (yGravity - 10 * Math.sin((e.beta * Math.PI) / 180) > threshold) {
-      //We are moving the device up
-
-      deviceWasLastMovingUpwards = true;
-    } else if (
-      yGravity - 10 * Math.sin((e.beta * Math.PI) / 180) <
-      -threshold
-    ) {
-      //We are moving the device down
-
-      if (deviceWasLastMovingUpwards) {
-        //We have taken a "step"
-
-        isDeviceMoving = true;
-      }
-
-      deviceWasLastMovingUpwards = false;
-    } else {
-      isDeviceMoving = false;
-    }
-
-    if (isDeviceMoving && !deviceWasMoving) {
-      //Send "playvideo" event
-      if (socket.readyState === WebSocket.OPEN) {
-        socket.send(
-          JSON.stringify({
-            partnerID: desktopWebSocketID,
-            messageType: "playvideo"
-          })
-        );
-      }
-    } else if (!isDeviceMoving && deviceWasMoving) {
-      //Send "pausevideo" event
-      if (socket.readyState === WebSocket.OPEN) {
-        socket.send(
-          JSON.stringify({
-            partnerID: desktopWebSocketID,
-            messageType: "pausevideo"
-          })
-        );
-      }
-    }
-
-    deviceWasMoving = isDeviceMoving;
-  }
 
   $: if (socketIsOpen && desktopHasConnected) {
-    window.addEventListener("devicemotion", handleDeviceMotion);
-    window.addEventListener("deviceorientation", handleDeviceOrientation);
+    accelerometer(
+      deviceHasMoved => {
+        if (deviceHasMoved && !deviceWasMoving) {
+          playVideo();
+        } else if (!deviceHasMoved && deviceWasMoving) {
+          pauseVideo();
+        }
+
+        deviceWasMoving = deviceHasMoved;
+      },
+      1.5,
+      500
+    );
   }
 </script>
 
