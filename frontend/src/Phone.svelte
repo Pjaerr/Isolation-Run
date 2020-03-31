@@ -1,5 +1,6 @@
 <script>
   import { accelerometer } from "./accelerometer";
+  import { disableShakeToUndo } from "./disableShakeToUndo";
   import gifs from "./gifs.js";
 
   const gif = gifs[Math.floor(Math.random() * (gifs.length - 1 + 1))];
@@ -50,9 +51,6 @@
           })
         );
       }
-
-      window.removeEventListener("devicemotion", handleDeviceMotion);
-      window.removeEventListener("deviceorientation", handleDeviceOrientation);
     };
   }
 
@@ -81,6 +79,11 @@
   let deviceWasMoving = true;
 
   $: if (socketIsOpen && desktopHasConnected) {
+    window.addEventListener("keydown", e => {
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
     accelerometer(
       deviceHasMoved => {
         if (deviceHasMoved && !deviceWasMoving) {
@@ -135,7 +138,8 @@
     bind:value={connectionCode}
     autocapitalize="off"
     autocomplete="off"
-    autofocus />
+    autofocus
+    use:disableShakeToUndo />
 
   <button on:click={openConnection}>Connect</button>
 {:else}
