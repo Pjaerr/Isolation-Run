@@ -49,29 +49,28 @@ export default {
     // instead of npm run dev), minify
     production && terser(),
 
-    production &&
-      babel({
-        extensions: [".js", ".mjs", ".html", ".svelte"],
-        runtimeHelpers: true,
-        exclude: ["node_modules/@babel/**"],
-        presets: [
-          [
-            "@babel/preset-env",
-            {
-              targets: "> 0.25%, not op_mini all"
-            }
-          ]
-        ],
-        plugins: [
-          "@babel/plugin-syntax-dynamic-import",
-          [
-            "@babel/plugin-transform-runtime",
-            {
-              useESModules: true
-            }
-          ]
+    babel({
+      extensions: [".js", ".mjs", ".html", ".svelte"],
+      runtimeHelpers: true,
+      exclude: ["node_modules/@babel/**"],
+      presets: [
+        [
+          "@babel/preset-env",
+          {
+            targets: "> 0.25%, not op_mini all"
+          }
         ]
-      })
+      ],
+      plugins: [
+        "@babel/plugin-syntax-dynamic-import",
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            useESModules: true
+          }
+        ]
+      ]
+    })
   ],
   watch: {
     clearScreen: false
