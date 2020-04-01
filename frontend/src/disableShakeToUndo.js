@@ -9,6 +9,12 @@ export function disableShakeToUndo(node) {
     //This isn't an emoji
     if (utf8.search("%EF") !== 0) {
       node.value = node.value + String.fromCharCode(nationUnicode);
+
+      node.dispatchEvent(
+        new CustomEvent("inputChanged", {
+          detail: node.value
+        })
+      );
     }
   };
 
@@ -17,6 +23,12 @@ export function disableShakeToUndo(node) {
       e.preventDefault();
       const value = node.value;
       node.value = value.slice(0, value.length - 1);
+
+      node.dispatchEvent(
+        new CustomEvent("inputChanged", {
+          detail: node.value
+        })
+      );
     }
   };
 }

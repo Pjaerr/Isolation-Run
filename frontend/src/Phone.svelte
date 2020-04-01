@@ -10,10 +10,13 @@
   let desktopWebSocketID = "";
   let socketIsOpen = false;
 
+  let inputField;
+
   let socket;
 
-  function openConnection() {
+  function openWebSocket() {
     socket = new WebSocket("wss://" + location.host);
+
     socket.onopen = e => {
       socketIsOpen = true;
 
@@ -34,8 +37,6 @@
     socket.onmessage = e => {
       const data = JSON.parse(e.data);
 
-      console.log("Received a message");
-
       if (data.messageType === "connection") {
         desktopHasConnected = true;
         desktopWebSocketID = data.id;
@@ -52,6 +53,21 @@
         );
       }
     };
+  }
+
+  function openConnection() {
+    if (typeof DeviceMotionEvent.requestPermission === "function") {
+      DeviceMotionEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === "granted") {
+            openWebSocket();
+          }
+        })
+        .catch(console.error);
+    } else {
+      // handle regular non iOS 13+ devices
+      openWebSocket();
+    }
   }
 
   const playVideo = () => {
@@ -135,11 +151,14 @@
   <input
     type="text"
     name="connectionCode"
-    bind:value={connectionCode}
     autocapitalize="off"
     autocomplete="off"
     autofocus
-    use:disableShakeToUndo />
+    bind:value={connectionCode}
+    use:disableShakeToUndo
+    on:inputChanged={({ detail }) => {
+      connectionCode = detail;
+    }} />
 
   <button on:click={openConnection}>Connect</button>
 {:else}
