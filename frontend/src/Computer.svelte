@@ -97,7 +97,9 @@
 
 {#if hasChosenVideo}
   {#if phoneHasConnected}
-    <Video youtubeVideoID={selectedVideo} />
+    <Video
+      youtubeVideoID={selectedVideo.id}
+      startTime={selectedVideo.startTime} />
   {:else}
     <h1>Enter the following code on your phone to connect:</h1>
     <h1 class="code">{connectionCode}</h1>

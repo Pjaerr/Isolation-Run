@@ -1,10 +1,13 @@
 <script>
-  export let selectedVideo = "DHq0pLFavyc";
+  export let selectedVideo = { id: "lij9G5z1xZE", startTime: "240" };
 
   let isUserDefinedOption = false;
+  let userDefinedOption = "";
+
+  $: selectedVideo.id = userDefinedOption;
 
   $: if (isUserDefinedOption) {
-    selectedVideo = "";
+    selectedVideo = { id: "", startTime: "0" };
   }
 </script>
 
@@ -51,17 +54,29 @@
         Video ID (eg: youtube.com/watch?v=
         <b>Hndf5JRwUL0</b>
         ) :
-        <input type="text" bind:value={selectedVideo} />
+        <input type="text" bind:value={userDefinedOption} />
       </label>
     {:else}
       <label>
         Choose Scene:
         <select bind:value={selectedVideo}>
-          <option value="1aqM14CYb4Y">Mountains</option>
-          <option value="1aqM14CYb4Y">Hills</option>
-          <option value="PLnELXJ-tLs">Countryside</option>
-          <option value="jW7SxamQS9M">Winter Walk</option>
-          <option value="8mQ454kcPJY">City</option>
+          <option value={{ id: 'lij9G5z1xZE', startTime: '240' }}>
+            London
+          </option>
+          <option value={{ id: 'ngAbdEQA9nQ', startTime: '157' }}>
+            High Banks Metro Park, Ohio
+          </option>
+          <option value={{ id: 'wBpzSRasvtk', startTime: '47' }}>
+            Lisbon, Ohio
+          </option>
+          <option value={{ id: 'iKwzffVt16M', startTime: '57' }}>
+            Torquay, Australia
+          </option>
+          <option value={{ id: 'qYD68Zvw8UE', startTime: '60' }}>Paris</option>
+          <option value={{ id: 'x_buQ7zYqHE', startTime: '120' }}>
+            Hawaii
+          </option>
+
         </select>
       </label>
     {/if}

@@ -2,6 +2,7 @@
   import { isPaused } from "./stores.js";
 
   export let youtubeVideoID;
+  export let startTime = "0";
 
   $: if ($isPaused === true) {
     console.log("Pausing Video");
@@ -46,6 +47,6 @@
   id="youtube_player_iframe"
   width="100%"
   height="100%"
-  src="https://www.youtube.com/embed/{youtubeVideoID}?enablejsapi=1&origin=https://{location.host}&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=1"
+  src="https://www.youtube.com/embed/{youtubeVideoID}?start={startTime}&enablejsapi=1&origin=https://{location.host}&autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&color=white&controls=1"
   frameborder="0"
   allow="autoplay; encrypted-media;" />
