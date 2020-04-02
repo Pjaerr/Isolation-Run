@@ -1,9 +1,9 @@
-# QuaRUNtine
-A silly website that helps you keep up your running habit whilst in lockdown/quarantine made using Svelte, Node and WebSockets.
+# Isolation Run
+A silly website that helps you keep up your running habit whilst in isolation/lockdown/quarantine made using Svelte, Node and WebSockets.
 
 This was inspired by a [tweet](https://twitter.com/devdevcharlie/status/1241812642852995074) by @devdevcharlie where they did this with pose detection!
 
-You can view a live demo at the following link: https://quaruntine.herokuapp.com/ (VERY EXPERIMENTAL)
+You can view a live demo at the following link: https://isolation-run.herokuapp.com/ (VERY EXPERIMENTAL)
 
 ## Getting Setup Locally
 
