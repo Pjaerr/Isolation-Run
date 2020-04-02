@@ -4,10 +4,12 @@
   let isUserDefinedOption = false;
   let userDefinedOption = "";
 
-  $: selectedVideo.id = userDefinedOption;
-
-  $: if (isUserDefinedOption) {
-    selectedVideo = { id: "", startTime: "0" };
+  $: {
+    if (isUserDefinedOption) {
+      selectedVideo = { id: userDefinedOption, startTime: "0" };
+    } else {
+      selectedVideo = { id: "lij9G5z1xZE", startTime: "240" };
+    }
   }
 </script>
 
@@ -57,6 +59,13 @@
         <input type="text" bind:value={userDefinedOption} />
       </label>
     {:else}
+      <p>
+        All Predefined Videos are taken from the
+        <a href="https://www.youtube.com/channel/UCq5O2ZfzRQChMdahnpKpGVg">
+          Treadmill TV
+        </a>
+        channel
+      </p>
       <label>
         Choose Scene:
         <select bind:value={selectedVideo}>
