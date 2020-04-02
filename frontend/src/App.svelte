@@ -52,9 +52,9 @@
     <Phone />
   {:else}
     <h1>
-      Welcome to Qua
-      <em>run</em>
-      tine. You'll need a phone and a computer to get started!
+      Welcome to
+      <em>Isolation Run</em>
+      You'll need a phone and a computer to get started!
     </h1>
 
     <button class="how-to-button" on:click={() => (howToIsActive = true)}>

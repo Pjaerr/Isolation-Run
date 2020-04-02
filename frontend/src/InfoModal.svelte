@@ -134,10 +134,8 @@
     </header>
     <section class="body">
       <div class="body-intro">
-        Qua
-        <em>run</em>
-        tine is a fun little website that lets you watch a video on your
-        computer but only when your phone detects that you are running.
+        Isolation Run is a fun little website that lets you watch a video on
+        your computer but only when your phone detects that you are running.
         Hopefully a fun way to keep fit whilst locked indoors!
       </div>
 
@@ -176,7 +174,7 @@
           <br />
           <br />
           The source code can be found
-          <a href="https://github.com/Pjaerr/QuaRUNtine">here</a>
+          <a href="https://github.com/Pjaerr/Isolation-Run">here</a>
         </div>
       </div>
     </section>
