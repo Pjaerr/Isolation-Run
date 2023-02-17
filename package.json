@@ -1,11 +1,12 @@
 {
-  "name": "QuaRUNtine",
+  "name": "isolation-run",
   "version": "1.0.0",
   "description": "A silly website that helps you keep up your running habit whilst in lockdown/quarantine made using Svelte, Node and WebSockets.",
   "main": "index.js",
   "scripts": {
     "start": "cd backend && node main",
     "build": "cd frontend && npm run build",
+    "setup": "cd frontend && npm install && npm run build && cd ../backend && npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
